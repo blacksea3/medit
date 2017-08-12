@@ -38,13 +38,15 @@ def login(request):
 	else:
 		result = login_verify(request.POST.get('username'),request.POST.get('password'))
 		if result == 'T':
-			print(request.POST.get('online'))
-		
-			if request.POST.get('online') == '1':
-				request.session['username'] = request.POST.get('username')
-				request.session['password'] = request.POST.get('password')				
+			request.session['username'] = request.POST.get('username')
+			request.session['password'] = request.POST.get('password')
+			if request.POST.get('online') == '0':	
+				request.session.set_expiry(0)
 			return HttpResponse('T')
 		elif result == 'F1' or result == 'F0':
 			return HttpResponse(result)
 		else:	
 			return HttpResponse('F2')
+
+			
+			

@@ -19,6 +19,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+#这个目录的lib留着！
+!medit/blog/static/blog/lib/
 lib64/
 parts/
 sdist/

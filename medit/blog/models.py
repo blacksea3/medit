@@ -24,7 +24,7 @@ class User(models.Model):
 		return self.username
 
 	#def getlongid(self):
-	#	
+	#
 
 ##文章表 字段：ID、所属板块、标题、正文（富文本）、最后修改日期、备注。	
 class Article(models.Model):

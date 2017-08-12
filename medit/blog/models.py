@@ -36,7 +36,7 @@ class Article(models.Model):
 	remark = models.CharField(max_length = 50)
 	
 	def __str__(self):
-		return self.username
+		return self.title
 		
 ##板块表 字段：ID、父板块ID、标题、描述、最后修改日期、备注。		
 class Block(models.Model):
@@ -49,5 +49,5 @@ class Block(models.Model):
 	remark = models.CharField(max_length = 50)
 	
 	def __str__(self):
-		return self.username
+		return self.title
 		

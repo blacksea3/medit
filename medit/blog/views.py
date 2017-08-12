@@ -28,7 +28,7 @@ def login(request):
 	if request.META['REQUEST_METHOD'] == 'GET':
 		result = login_auto_check(request.session)
 		if result:
-			return HttpResponseRedirect("http://www.baidu.com")
+			return HttpResponseRedirect("../index")
 		else:
 			return render(request, 'blog/login.html',{
 				#'tip':tip,
@@ -40,7 +40,8 @@ def login(request):
 		if result == 'T':
 			request.session['username'] = request.POST.get('username')
 			request.session['password'] = request.POST.get('password')
-			if request.POST.get('online') == '0':	
+			if request.POST.get('online') == '0':
+				#浏览器关闭,session失效(这表示不自动登录)
 				request.session.set_expiry(0)
 			return HttpResponse('T')
 		elif result == 'F1' or result == 'F0':
@@ -48,5 +49,10 @@ def login(request):
 		else:	
 			return HttpResponse('F2')
 
-			
-			
+## 首页
+def index(request):
+	result = login_auto_check(request.session)
+	if not result:
+		return HttpResponseRedirect("../login")
+	else:
+		return render(request, 'blog/index.html')

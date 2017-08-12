@@ -47,7 +47,7 @@ $("#login").click(function(){
 					if (data=='T')
 					{
 						//登陆成功，转向主页
-						window.location = "http://www.baidu.com";
+						window.location = "../index";
 					}
 					else 
 					{

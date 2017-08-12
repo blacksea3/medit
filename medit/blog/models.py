@@ -42,6 +42,7 @@ class Article(models.Model):
 class Block(models.Model):
 	id = models.AutoField(primary_key = True)
 	parentid = models.IntegerField()
+	type = models.BooleanField(default = False)		#板块类型 False为子 True为父
 	title = models.CharField(max_length = 50)
 	description = models.CharField(max_length = 100)
 	modifytime = models.DateTimeField(auto_now = True)

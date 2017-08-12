@@ -99,3 +99,6 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+#disable setting.py
+medit/medit/settings.py

@@ -1,3 +1,6 @@
+#½ûÖ¹settings.pyÉÏ´«
+medit/medit/settings.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -99,6 +102,3 @@ ENV/
 
 # mypy
 .mypy_cache/
-
-#disable settings.py
-settings.py

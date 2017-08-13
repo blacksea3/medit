@@ -17,12 +17,22 @@ from blog.user import login_auto_check
 ## 输出类型+代号 F错误 T成功 (目前总是T)
 from blog.common_add import new_block_add
 
+## 编辑板块
+## 输入ID、标题、描述、备注
+## 输出类型+代号 F错误 T成功 (目前总是T)
+from blog.common_add import old_block_edit
+
+## 删除板块
+## 输入ID
+## 输出类型+代号 F错误 T成功 F1 板块不存在 F2里面还有文章
+from blog.common_add import old_block_del
+
 ## 按照时间由近至远寻找板块
 ## 输入范围
 ## 输出内容，格式为Queryset
 from blog.common_select import select_block_bytime
 
-## 生成页码标记
+## 生成板块页码标记
 ## 输入每页数量,当前页码和最多同时存在的页数
 ## 输出 (first_page number==1, 
 ##  [continuous pages such as 3 4 5 6 7 when present ==5], 
@@ -32,6 +42,47 @@ from blog.common_select import generate_block_page
 ## 生成板块数量
 ## 输出数字
 from blog.common_select import generate_total_block_number
+
+## 按照ID寻找板块
+## 输入ID
+## 输出格式为Queryset    
+from blog.common_select import select_block_byid
+
+## 寻找所有板块(按照时间由近至远)
+## 输出内容，格式为Queryset
+from blog.common_select import select_block_all
+
+## 添加文章
+## 输入板块id、标题、内容、备注
+## 输出类型+代号 F错误 T成功 (目前总是T)
+from blog.common_add import new_article_add
+
+## 按照时间由近至远寻找某版块下的文章
+## 输入blockid,范围
+## 输出内容，格式为Queryset
+from blog.common_select import select_article_bytime
+
+## 寻找寻找某版块下所有的文章(按照时间由近至远)
+## 输入blockid
+## 输出内容，格式为Queryset
+from blog.common_select import select_article_all
+
+## 按照ID寻找文章
+## 输入ID
+## 输出格式为Queryset    
+from blog.common_select import select_article_byid
+
+## 生成文章数量(某版块下的)
+## 输入blockid
+## 输出数字
+from blog.common_select import generate_total_article_number
+    
+## 生成文章页码标记
+## 输入blockid,每页数量,当前页码和最多同时存在的页数
+## 输出 (first_page number==1, 
+##  [continuous pages such as 3 4 5 6 7 when present ==5], 
+##  first_displaypagenumber, last_displaypagenumber, last page number)
+from blog.common_select import generate_article_page
 
 # Create your views here.
 def test(request):
@@ -83,12 +134,12 @@ def block_list(request):
     if not result:
         return HttpResponseRedirect("../login")
     else:
-        block_data = select_block_bytime((0,10))
         if request.GET.get('page'):
             present_page = int(request.GET.get('page'))
         else:
             present_page = 1
-        page_data = generate_block_page(2,present_page,5)
+        block_data = select_block_bytime((10*present_page-10,10*present_page)) 
+        page_data = generate_block_page(10,present_page,5)
         total_data_number = generate_total_block_number()
         return_dict = {'block_data':block_data,'total_data_number':total_data_number} 
         page_dict = {'first_page':page_data[0],
@@ -96,7 +147,8 @@ def block_list(request):
                 'first_display_page':page_data[2],
                 'last_display_page':page_data[3],
                 'last_page':page_data[4],
-                'display_pagenumber':page_data[3]-page_data[2]+1
+                'display_pagenumber':page_data[3]-page_data[2]+1,
+                'present_page':present_page
                 }
         page_dict['prepage_m1'] = present_page if present_page == 1 else present_page - 1
         page_dict['prepage_a1'] = present_page if present_page == page_data[4] else present_page + 1    
@@ -116,3 +168,87 @@ def block_add(request):
             request.POST.get('description'),
             request.POST.get('remark'))
         return HttpResponse('T')
+
+## 编辑板块页
+def block_edit(request):
+    if request.META['REQUEST_METHOD'] == 'GET':
+        result = login_auto_check(request.session)
+        if not result:
+            return HttpResponseRedirect("../login")
+        else:
+            if request.GET.get('id'):
+                block_data = select_block_byid(int(request.GET.get('id')))
+                return render(request, 'blog/block-edit.html',{'block_data':block_data})
+            else:
+                #防止意外发生,以后修改成出错页
+                raise Exception('ERROR when edit block')
+    else:
+        old_block_edit(int(request.POST.get('bid')),
+            request.POST.get('title'),
+            request.POST.get('description'),
+            request.POST.get('remark'))
+        return HttpResponse('T')
+
+## 删除板块页        
+def block_del(request):
+    if request.META['REQUEST_METHOD'] == 'GET':
+        raise Exception('ERROR because get method found when deleting block')
+    else:
+        if request.POST.get('bid'):
+            result = old_block_del(int(request.POST.get('bid')))
+            if result[0] == 'T':
+                return HttpResponse(result)
+            elif result[0] == 'F':
+                return HttpResponse(result)
+            else:
+                raise Exception('ERROR when del block')
+        else:
+            return HttpResponse('F2')
+
+## 添加文章页            
+def article_add(request):
+    if request.META['REQUEST_METHOD'] == 'GET':
+        result = login_auto_check(request.session)
+        if not result:
+            return HttpResponseRedirect("../login")
+        else:
+            block_data = select_block_all()
+            return render(request, 'blog/article-add.html',{'block_data':block_data})
+    else:
+        new_article_add(request.POST.get('blockid'),
+            request.POST.get('title'),
+            request.POST.get('content'),
+            request.POST.get('remark'))
+        return HttpResponse('T')
+
+## 文章列表页
+def article_list(request):
+    result = login_auto_check(request.session)
+    if not result:
+        return HttpResponseRedirect("../login")
+    else:
+        if request.GET.get('page'):
+            present_page = int(request.GET.get('page'))
+        else:
+            present_page = 1
+        if request.GET.get('bid'):
+            bid = int(request.GET.get('bid'))
+        else:
+            bid = 1
+        
+        article_data = select_article_bytime(bid,(10*present_page-10,10*present_page))
+        page_data = generate_article_page(bid,10,present_page,5)
+        total_data_number = generate_total_article_number(bid)
+        return_dict = {'article_data':article_data,'total_data_number':total_data_number} 
+        page_dict = {'first_page':page_data[0],
+                'display_pages':page_data[1],
+                'first_display_page':page_data[2],
+                'last_display_page':page_data[3],
+                'last_page':page_data[4],
+                'display_pagenumber':page_data[3]-page_data[2]+1,
+                'present_page':present_page
+                }
+        page_dict['prepage_m1'] = present_page if present_page == 1 else present_page - 1
+        page_dict['prepage_a1'] = present_page if present_page == page_data[4] else present_page + 1    
+        return_dict['page_data'] = page_dict
+        return render(request, 'blog/article-list.html',return_dict)        

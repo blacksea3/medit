@@ -8,33 +8,46 @@
 {% endblock uniquecss %}
 
 {% block uniquetitle %}
-<title>新增板块 - 资讯管理 - H-ui.admin v3.1</title>
+<title>新增文章 - 资讯管理 - H-ui.admin v3.1</title>
 <meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 <meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
 {% endblock uniquetitle %}
 
 {% block body %}
 <article class="page-container">
-	<form class="form form-horizontal" id="form-block-add">
+	<form class="form form-horizontal" id="form-article-add">
 		{% csrf_token %}
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>板块标题：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章标题：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="blocktitle" name="blocktitle">
+				<input type="text" class="input-text" value="" placeholder="" id="articletitle" name="articletitle">
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">板块描述：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<textarea name="blockdescription" id="blockdescription" cols="" rows="" class="textarea"></textarea>
+				<span class="select-box">
+				<select name="articlecolumn" id="articlecolumn" class="select">
+				{% for block in block_data %}
+					<option value="{{block.id}}">{{block.title}}</option>
+				{% endfor %}	
+				</select>
+				</span> 
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">板块备注：</label>
+			<label class="form-label col-xs-4 col-sm-2">文章内容：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<textarea name="blockremark" id="blockremark" cols="" rows="" class="textarea"></textarea>
+				<textarea name="articlecontent" id="articlecontent"></textarea>
 			</div>
-		</div>		
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">文章备注：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="articleremark" id="articleremark" cols="" rows="" class="textarea"></textarea>
+			</div>
+		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
 				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
@@ -49,5 +62,8 @@
 
 {% block uniquelastjs %}
 <script type="text/javascript" src="{% static 'blog/lib/My97DatePicker/4.8/WdatePicker.js' %}"></script>
-<script type="text/javascript" src="{% static 'blog/scripts/block-add.js' %}"></script>
+<script type="text/javascript" src="{% static 'blog/scripts/article-add.js' %}"></script>
+<script>
+    CKEDITOR.replace( 'articlecontent' , {uiColor: '#9AB8F3'});
+</script>
 {% endblock uniquelastjs %}

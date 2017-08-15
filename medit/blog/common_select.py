@@ -19,7 +19,7 @@ def select_block_all():
 def select_block_byid(bid):
     blockdata = Block.objects.filter(id=bid)
     return blockdata
-    
+
 ## 生成板块数量
 ## 输出数字
 def generate_total_block_number():
@@ -48,12 +48,15 @@ def select_article_all(bid):
 def select_article_byid(aid):
     articledata = Article.objects.filter(id=aid)
     return articledata
-
+    
 ## 生成文章数量(某版块下的)
-## 输入blockid
+## 输入blockid(若blockid=0表示全板块搜索)
 ## 输出数字
 def generate_total_article_number(bid):
-    return Article.objects.filter(blockid=bid).count()
+    if not bid:
+        return Article.objects.all().count()
+    else:
+        return Article.objects.filter(blockid=bid).count()
 
 ## 生成板块页码标记
 ## 输入每页数量,当前页码和最多同时存在的页数

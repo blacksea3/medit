@@ -16,7 +16,7 @@ urlpatterns=[
 	url(r'^article-add/$', views.article_add, name='article_add'),
 	url(r'^article-add.html/$', views.article_add, name='article_add'),
 	url(r'^article-list.html/$', views.article_list, name='article_list'),
-	#url(r'^block-edit/$', views.block_edit, name='block_edit'),
-	#url(r'^block-edit.html/$', views.block_edit, name='block_edit'),
-	#url(r'^block-del/$', views.block_del, name='block_del'),	
+	url(r'^article-edit/$', views.article_edit, name='article_edit'),
+	url(r'^article-edit.html/$', views.article_edit, name='article_edit'),
+	url(r'^article-del/$', views.article_del, name='article_del'),	
 ]

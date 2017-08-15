@@ -25,7 +25,7 @@ $(function(){
 		{
 			$.ajax({
 				url: "../article-add/", async: true,           
-					data: 
+					data:
 					{
 						title: $("#articletitle").val(),
 						content: CKEDITOR.instances.articlecontent.getData(),

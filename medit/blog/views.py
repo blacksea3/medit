@@ -73,7 +73,7 @@ from blog.common_select import select_article_all
 from blog.common_select import select_article_byid
 
 ## 生成文章数量(某版块下的)
-## 输入blockid
+## 输入blockid(若blockid=0表示全板块搜索)
 ## 输出数字
 from blog.common_select import generate_total_article_number
     
@@ -83,6 +83,16 @@ from blog.common_select import generate_total_article_number
 ##  [continuous pages such as 3 4 5 6 7 when present ==5], 
 ##  first_displaypagenumber, last_displaypagenumber, last page number)
 from blog.common_select import generate_article_page
+
+## 编辑文章
+## 输入ID、所属板块ID、标题、内容、备注
+## 输出类型+代号 F错误 T成功 (目前总是T)
+from blog.common_add import old_article_edit
+
+## 删除文章
+## 输入ID
+## 输出类型+代号 F错误 T成功 F1 文章不存在
+from blog.common_add import old_article_del
 
 # Create your views here.
 def test(request):
@@ -253,3 +263,43 @@ def article_list(request):
         page_dict['prepage_a1'] = present_page if present_page == page_data[4] else present_page + 1    
         return_dict['page_data'] = page_dict
         return render(request, 'blog/article-list.html',return_dict)        
+
+## 编辑文章页
+def article_edit(request):
+    if request.META['REQUEST_METHOD'] == 'GET':
+        result = login_auto_check(request.session)
+        if not result:
+            return HttpResponseRedirect("../login")
+        else:
+            if request.GET.get('id'):
+                article_data = select_article_byid(int(request.GET.get('id')))
+                block_data = select_block_all()
+                return render(request, 'blog/article-edit.html',
+                        {'article_data':article_data,'block_data':block_data})
+            else:
+                #防止意外发生,以后修改成出错页
+                raise Exception('ERROR when edit article')
+    else:
+        old_article_edit(int(request.POST.get('aid')),
+            request.POST.get('blockid'),
+            request.POST.get('title'),
+            request.POST.get('content'),
+            request.POST.get('remark'))
+        return HttpResponse('T')        
+
+## 删除文章页
+def article_del(request):
+    if request.META['REQUEST_METHOD'] == 'GET':
+        raise Exception('ERROR because get method found when deleting article')
+    else:
+        if request.POST.get('aid'):
+            result = old_article_del(int(request.POST.get('aid')))
+            if result[0] == 'T':
+                return HttpResponse(result)
+            elif result[0] == 'F':
+                return HttpResponse(result)
+            else:
+                raise Exception('ERROR when del article')
+        else:
+            return HttpResponse('F2')		
+		

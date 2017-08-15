@@ -10,17 +10,17 @@ $(function(){
 	});
 	
 	//表单验证
-	$("#form-article-add").validate({
+	$("#form-article-edit").validate({
 		//注意：这里这些形如blocktitle的标记是form里面的name,不是id!!!
 		rules:{
-			blocktitle:{
+			articletitle:{
 				required:true,
 				maxlength:50,
 			},
-			blockdescription:{
-				maxlength:100,
+			articlecontent:{
+				required:true,
 			},
-			blockremark:{
+			articleremark:{
 				maxlength:50,
 			},			
 		},
@@ -30,14 +30,15 @@ $(function(){
 		submitHandler:function(form)
 		{
 			$.ajax({
-				url: "../block-edit/", async: true,           
-					data: 
+				url: "../article-edit/", async: true,           
+					data:
 					{
-						bid: $("#blockid").text(),
-						title: $("#blocktitle").val(),
-						description: $("#blockdescription").val(),
-						remark: $("#blockremark").val(),
-						csrfmiddlewaretoken:$("#form-article-add").find("input[name='csrfmiddlewaretoken']").val()
+						aid: $("#articleid").text(),
+						title: $("#articletitle").val(),
+						content: CKEDITOR.instances.articlecontent.getData(),
+						blockid: $("#articlecolumn option:selected").val(),
+						remark: $("#articleremark").val(),
+						csrfmiddlewaretoken:$("#form-article-edit").find("input[name='csrfmiddlewaretoken']").val()
 					}, success:
 					function (data) {
 						if(data == 'T')

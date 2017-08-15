@@ -58,7 +58,7 @@ from blog.common_select import select_block_all
 from blog.common_add import new_article_add
 
 ## 按照时间由近至远寻找某版块下的文章
-## 输入blockid,范围
+## 输入blockid,范围(若blockid=0表示全板块搜索)
 ## 输出内容，格式为Queryset
 from blog.common_select import select_article_bytime
 
@@ -203,9 +203,9 @@ def block_del(request):
             else:
                 raise Exception('ERROR when del block')
         else:
-            return HttpResponse('F2')
+            return HttpResponse('F3')
 
-## 添加文章页            
+## 添加文章页
 def article_add(request):
     if request.META['REQUEST_METHOD'] == 'GET':
         result = login_auto_check(request.session)
@@ -234,12 +234,13 @@ def article_list(request):
         if request.GET.get('bid'):
             bid = int(request.GET.get('bid'))
         else:
-            bid = 1
-        
+            bid = 0
+        block_data = select_block_all()
         article_data = select_article_bytime(bid,(10*present_page-10,10*present_page))
         page_data = generate_article_page(bid,10,present_page,5)
         total_data_number = generate_total_article_number(bid)
-        return_dict = {'article_data':article_data,'total_data_number':total_data_number} 
+        return_dict = {'block_data':block_data,'presentbid':bid,
+                'article_data':article_data,'total_data_number':total_data_number} 
         page_dict = {'first_page':page_data[0],
                 'display_pages':page_data[1],
                 'first_display_page':page_data[2],

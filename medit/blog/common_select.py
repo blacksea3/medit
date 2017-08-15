@@ -26,10 +26,13 @@ def generate_total_block_number():
     return Block.objects.all().count()
 
 ## 按照时间由近至远寻找某版块下的文章
-## 输入blockid,范围
+## 输入blockid,范围(若blockid=0表示全板块搜索)
 ## 输出内容，格式为Queryset
 def select_article_bytime(bid,range):
-    newarticles = Article.objects.filter(blockid=bid).order_by('-modifytime')[range[0]:range[1]]
+    if not bid:
+        newarticles = Article.objects.all().order_by('-modifytime')[range[0]:range[1]]
+    else:
+        newarticles = Article.objects.filter(blockid=bid).order_by('-modifytime')[range[0]:range[1]]
     return newarticles
 
 ## 寻找寻找某版块下所有的文章(按照时间由近至远)

@@ -3,7 +3,7 @@
 {% load staticfiles %}
 <head>
 <meta charset="utf-8">
-<title>主页</title>
+<title>{{present_block_data.0.title}}</title>
 <meta name="keywords" content="个人博客模板,博客模板" />
 <meta name="description" content="寻梦主题的个人博客模板，优雅、稳重、大气,低调。" />
 <link href="{% static 'main/css/base.css' %}" rel="stylesheet">
@@ -64,8 +64,8 @@
         <p>文章<span>推荐</span></p>
     </h2>
     <div class="bloglist left">
-        <!--置顶文章,5条-->
-        {% for article in top_article_data %}
+        <!--板块最新文章,5条-->
+        {% for article in new_article_data_thisblock %}
         <h3>{{article.title}}</h3>
         <figure><img src="{{article.getimgsrc}}images/001.png"></figure>
         <ul>
@@ -77,17 +77,6 @@
             <!--<span>个人博客：[<a href="/news/life/">程序人生</a>]</span>-->
         </p>
         {% endfor %}
-        
-        <!-- 这些是一个栏目 -->
-        <!--
-        <h3>程序员请放下你的技术情节，与你的同伴一起进步</h3>
-        <figure><img src="images/001.png"></figure>
-        <ul>
-        <p>如果说掌握一门赖以生计的技术是技术人员要学会的第一课的话， 那么我觉得技术人员要真正学会的第二课，不是技术，而是业务、交流与协作，学会关心其他工作伙伴的工作情况和进展...</p>
-        <a title="/" href="/" target="_blank" class="readmore">阅读全文>></a>
-        </ul>
-        <p class="dateview"><span>2013-11-04</span><span>作者：杨青</span><span>个人博客：[<a href="/news/life/">程序人生</a>]</span></p>-->
-        
     </div>
     <aside class="right">
         <!--天气显示暂不实现

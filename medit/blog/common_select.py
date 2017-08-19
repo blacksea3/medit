@@ -44,11 +44,23 @@ def select_article_all(bid):
 
 ## 按照ID寻找文章
 ## 输入ID
-## 输出格式为Queryset    
+## 输出格式为Queryset
 def select_article_byid(aid):
     articledata = Article.objects.filter(id=aid)
     return articledata
-    
+
+## 搜索某版块热门文章,当前实现:按照时间由近至远寻找某版块下的文章
+## 输入板块id(若blockid=0表示全板块搜索),数量
+## 输出格式为Queryset
+def select_article_byhot(bid,range):
+	return select_article_bytime(bid,range)
+	
+## 搜索某版块高置顶文章,当前实现:按照时间由近至远寻找某版块下的文章
+## 输入板块id(若blockid=0表示全板块搜索),数量
+## 输出格式为Queryset
+def select_article_bytop(bid,range):
+	return select_article_bytime(bid,range)
+
 ## 生成文章数量(某版块下的)
 ## 输入blockid(若blockid=0表示全板块搜索)
 ## 输出数字

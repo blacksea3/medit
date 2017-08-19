@@ -96,7 +96,7 @@ from blog.common_add import old_article_del
 
 # Create your views here.
 def test(request):
-    objects = Blog.objects.all()
+    #objects = Blog.objects.all()
 
     return render(request, 'blog/ckeditor_test.html',{
         #'tip':tip,

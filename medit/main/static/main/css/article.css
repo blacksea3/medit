@@ -3,3 +3,17 @@
 .ititle { color: #000; font: 20px/30px "Microsoft YaHei"; margin:10px; }
 .itime { color: #999; font: 400 12px/22px Arial; text-align: right; margin:10px; margin-right:20px; }
 .icontent{ color: #999; font: 400 12px/22px Arial; }
+ol{padding-left: 20px;}
+blockquote{
+    font: 14px/22px normal helvetica, sans-serif;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-left: 3px solid #ccc;
+    background-color:#f1f1f1
+}
+.icontent{ margin:10px; margin-right:20px; }

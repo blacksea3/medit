@@ -1,5 +1,7 @@
 #禁止settings.py上传
 medit/medit/settings.py
+#禁止本地上传文件夹及文件上传
+medit/static/ck_upload/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

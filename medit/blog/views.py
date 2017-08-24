@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 
 ###外部函数
 
@@ -93,6 +94,11 @@ from blog.common_add import old_article_edit
 ## 输入ID
 ## 输出类型+代号 F错误 T成功 F1 文章不存在
 from blog.common_add import old_article_del
+
+## ckeditor上传图片,处理函数
+## 输入文件(类似字典)
+## 输出(响应,参数) 0正确,参数:文件名 1错误,参数:错误提示
+from blog.upload import ck_deal_img
 
 # Create your views here.
 def test(request):
@@ -301,5 +307,26 @@ def article_del(request):
             else:
                 raise Exception('ERROR when del article')
         else:
-            return HttpResponse('F2')		
-		
+            return HttpResponse('F2')
+        
+## ckeditor上传图片,这里关掉csrf
+@csrf_exempt
+def ck_upload_img(request):
+    if request.method == 'POST':
+        callback = request.GET.get('CKEditorFuncNum')  
+        f = request.FILES["upload"]
+        if not f:
+            res = "<script>window.parent.CKEDITOR.tools.callFunction("+callback+",'/"+"NO FILE"+"', '');</script>"
+            return HttpResponse(res)
+        else:
+            code,para = ck_deal_img(f)
+        if not code:
+            res = "<script>window.parent.CKEDITOR.tools.callFunction("+callback+",'/"+para+"', '');</script>"
+            return HttpResponse(res)
+        else:
+            res = "<script type=\"text/javascript\">" + \
+                "window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'" + para + "'" + ");" + \
+                "</script>"
+            return HttpResponse(res)
+    else:
+        raise Exception("This method shouldn't be GET!!!")

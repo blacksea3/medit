@@ -23,6 +23,23 @@
 	white-space: pre-wrap;
 	word-wrap: break-word;
 }
+.icontent a:link {
+	text-decoration: none; 
+	color:blue; 
+	font-size: 16px; 
+	font-family: 微软雅黑;
+}
+.icontent a:visited {
+	color:green;
+}
+.icontent a:hover {
+	text-decoration: underline; 
+	color:#09f; 
+	font-size: 16px;
+}
+.icontent a:active {
+	text-decoration: blink; 
+	color: yellow;}
 ol{
 	padding-left: 20px;
 }

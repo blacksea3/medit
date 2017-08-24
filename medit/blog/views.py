@@ -100,6 +100,11 @@ from blog.common_add import old_article_del
 ## 输出(响应,参数) 0正确,参数:文件名 1错误,参数:错误提示
 from blog.upload import ck_deal_img
 
+## 通用的上传文件,处理函数(现在只用作上传图片)
+## 输入文件(类似字典)
+## 输出(响应,参数) 0正确,参数:文件ID 1错误,参数:错误提示
+from blog.upload import common_deal_file
+
 # Create your views here.
 def test(request):
     #objects = Blog.objects.all()
@@ -309,6 +314,20 @@ def article_del(request):
         else:
             return HttpResponse('F2')
         
+## article.html上传图片,这里关掉csrf
+@csrf_exempt
+def article_upload_file(request):
+	if request.method == 'POST':
+		f = request.FILES["upfile"]
+		if not f:
+			raise Exception("No file??")
+		else:
+			code,para = common_deal_file(f)
+			if not code:
+				return HttpResponse("上传文件成功!")
+			else:
+				return HttpResponse(para)
+
 ## ckeditor上传图片,这里关掉csrf
 @csrf_exempt
 def ck_upload_img(request):

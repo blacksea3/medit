@@ -51,6 +51,28 @@ $(function(){
 	state = "pending";
 });
 
+function imgupload()
+{
+	var formData  = new FormData();
+	if ($('#articleimgfile').val() == "") {
+		alert("empty?");
+	}
+	formData.append("upload", 1);
+	formData.append("upfile", $("#articleimgfile")[0].files[0]);
+    $.ajax({
+		type: "POST",
+		url: "../article-upload-file/",
+		cache : false,
+		//enctype: 'multipart/form-data',
+		processData: false,
+		contentType: false,
+		data: formData,
+		success: function (data) {
+			alert(data);
+		}
+    });
+};
+
 function removeIframe()
 {
 	var index = parent.layer.getFrameIndex(window.name);  

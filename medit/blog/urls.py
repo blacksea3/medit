@@ -19,7 +19,7 @@ urlpatterns=[
 	url(r'^article-edit/$', views.article_edit, name='article_edit'),
 	url(r'^article-edit.html/$', views.article_edit, name='article_edit'),
 	url(r'^article-del/$', views.article_del, name='article_del'),
+	url(r'^article-upload-file/$', views.article_upload_file, name='article_upload_file'),
 	
 	url(r'^ck-upload-img/$', views.ck_upload_img, name='ck_upload_img'),
-	
 ]

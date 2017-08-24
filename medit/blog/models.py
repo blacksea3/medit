@@ -26,7 +26,7 @@ class User(models.Model):
     #def getlongid(self):
     #
 
-##文章表 字段：ID、所属板块、标题、正文（富文本）、最后修改日期、备注。  
+##文章表 字段：ID、所属板块、标题、正文（富文本）、最后修改日期、备注、附件的id们。  
 class Article(models.Model):
     id = models.AutoField(primary_key = True)
     blockid = models.IntegerField()
@@ -34,7 +34,8 @@ class Article(models.Model):
     content = models.TextField()
     modifytime = models.DateTimeField(auto_now = True)
     remark = models.CharField(max_length = 50)
-    
+    attachids = models.CharField(max_length = 20, default = "")
+	
     def getblocktitle(self):
         block = Block.objects.filter(id=self.blockid)
         if block:
@@ -57,4 +58,14 @@ class Block(models.Model):
     
     def __str__(self):
         return self.title
-        
+
+## 附件表 字段：ID、（绝对）路径、文件名、最后修改日期、备注
+class Attach(models.Model):
+    id = models.AutoField(primary_key = True)
+    src = models.CharField(max_length = 100)
+    file_name =models.CharField(max_length = 80)
+    modifytime = models.DateTimeField(auto_now = True)
+    remark = models.CharField(max_length = 50)
+    
+    def __str__(self):
+        return self.src

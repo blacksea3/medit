@@ -1,7 +1,7 @@
-#禁止settings.py上传
+#disable settings.py upload!!!
 medit/medit/settings.py
-#禁止本地上传文件夹及文件上传
-medit/static/ck_upload/
+# disable ck_upload admin and ckeditor(it is not working :), the true ckeditor files are in medit/blog/static ) files
+medit/static/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -36,23 +36,28 @@ def old_block_del(bid):
             return 'T'
 
 ## 添加文章
-## 输入板块id、标题、内容、备注
+## 输入板块id、标题、内容、备注、附件(目前只支持一个)
 ## 输出类型+代号 F错误 T成功 (目前总是T)
-def new_article_add(bid,title,content,remark):
-    newarticle=Article(blockid=bid,title=title,content=content,remark=remark)  
+def new_article_add(bid,title,content,remark,attachids):
+    if not attachids:
+        attachids = ''
+    newarticle=Article(blockid=bid,title=title,content=content,remark=remark,attachids=attachids)  
     newarticle.save()
     return 'T'          
         
 ## 编辑文章
-## 输入ID、所属板块ID、标题、内容、备注
+## 输入ID、所属板块ID、标题、内容、备注(目前只支持一个)
 ## 输出类型+代号 F错误 T成功 (目前总是T)
-def old_article_edit(aid,blockid,title,content,remark):
+def old_article_edit(aid,blockid,title,content,remark,attachids):
     article = Article.objects.filter(id=aid)
+    if not attachids:
+        attachids = ''
     if article:
         article[0].blockid = blockid
         article[0].title = title
         article[0].content = content
         article[0].remark = remark
+        article[0].attachids = attachids
         article[0].save()
     return 'T'
 

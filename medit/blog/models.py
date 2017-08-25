@@ -2,6 +2,7 @@ from django.db import models
 from ckeditor.fields import RichTextField
 
 import datetime
+import platform
 
 ##ckeditor,现在还没用上
 class Blog(models.Model):
@@ -34,15 +35,44 @@ class Article(models.Model):
     content = models.TextField()
     modifytime = models.DateTimeField(auto_now = True)
     remark = models.CharField(max_length = 50)
-    attachids = models.CharField(max_length = 20, default = "")
-	
+    attachids = models.CharField(max_length = 20, default = None)
+    
     def getblocktitle(self):
         block = Block.objects.filter(id=self.blockid)
         if block:
             return block[0].title
         else:
             return None
-    
+            
+    def getimgsrc(self):
+        if self.attachids:
+            if self.attachids.isdigit():     #一个附件(图片)
+                attach = Attach.objects.filter(id = int(self.attachids))
+                if attach:
+                    if platform.system() == 'Windows':  #local windows
+                        return '/static/common_upload/' + attach[0].file_name       
+                    elif platform.system() == 'Linux':  #aliyun
+                        return '/static/common_upload/' + attach[0].file_name
+                    else:
+                        return 'ERROR'
+                else:
+                    return None
+            else:                       #多个附件,暂不考虑
+                return None
+        return None
+
+    def getimgname(self):
+        if self.attachids:
+            if self.attachids.isdigit():     #一个附件(图片)
+                attach = Attach.objects.filter(id = int(self.attachids))
+                if attach:
+                    return attach[0].file_name
+                else:
+                    return None
+            else:                       #多个附件,暂不考虑
+                return None
+        return None
+        
     def __str__(self):
         return self.title
         

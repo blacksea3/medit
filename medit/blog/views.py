@@ -54,7 +54,7 @@ from blog.common_select import select_block_byid
 from blog.common_select import select_block_all
 
 ## 添加文章
-## 输入板块id、标题、内容、备注
+## 输入板块id、标题、内容、备注、附件(目前只支持一个)
 ## 输出类型+代号 F错误 T成功 (目前总是T)
 from blog.common_add import new_article_add
 
@@ -86,7 +86,7 @@ from blog.common_select import generate_total_article_number
 from blog.common_select import generate_article_page
 
 ## 编辑文章
-## 输入ID、所属板块ID、标题、内容、备注
+## 输入ID、所属板块ID、标题、内容、备注(目前只支持一个)
 ## 输出类型+代号 F错误 T成功 (目前总是T)
 from blog.common_add import old_article_edit
 
@@ -239,7 +239,8 @@ def article_add(request):
         new_article_add(request.POST.get('blockid'),
             request.POST.get('title'),
             request.POST.get('content'),
-            request.POST.get('remark'))
+            request.POST.get('remark'),
+            request.POST.get('attachids'))
         return HttpResponse('T')
 
 ## 文章列表页
@@ -295,7 +296,8 @@ def article_edit(request):
             request.POST.get('blockid'),
             request.POST.get('title'),
             request.POST.get('content'),
-            request.POST.get('remark'))
+            request.POST.get('remark'),
+            request.POST.get('attachids'))
         return HttpResponse('T')        
 
 ## 删除文章页
@@ -317,16 +319,16 @@ def article_del(request):
 ## article.html上传图片,这里关掉csrf
 @csrf_exempt
 def article_upload_file(request):
-	if request.method == 'POST':
-		f = request.FILES["upfile"]
-		if not f:
-			raise Exception("No file??")
-		else:
-			code,para = common_deal_file(f)
-			if not code:
-				return HttpResponse("上传文件成功!")
-			else:
-				return HttpResponse(para)
+    if request.method == 'POST':
+        f = request.FILES["upfile"]
+        if not f:
+            raise Exception("No file??")
+        else:
+            code,para = common_deal_file(f)
+            if not code:
+                return HttpResponse("T" + str(para))
+            else:
+                return HttpResponse("F" + para)
 
 ## ckeditor上传图片,这里关掉csrf
 @csrf_exempt

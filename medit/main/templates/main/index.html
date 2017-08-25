@@ -67,7 +67,7 @@
         <!--置顶文章,5条-->
         {% for article in top_article_data %}
         <h3>{{article.title}}</h3>
-        <figure><img src="{{article.getimgsrc}}images/001.png"></figure>
+        <figure><img src="{{article.getimgsrc}}"></figure>
         <ul>
         <p>{{article.summary}}</p>
         <a title="/" href="../article.html?id={{article.id}}" target="_blank" class="readmore">阅读全文>></a>

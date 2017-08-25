@@ -56,10 +56,13 @@ class Article(models.Model):
                     else:
                         return 'ERROR'
                 else:
-                    return None
+                    #返回默认图片
+                    return '/static/common_upload/20170825084618_QQ截图20170808094635.jpg'
             else:                       #多个附件,暂不考虑
-                return None
-        return None
+                #返回默认图片
+                return '/static/common_upload/20170825084618_QQ截图20170808094635.jpg'
+        #返回默认图片
+        return '/static/common_upload/20170825084618_QQ截图20170808094635.jpg'
 
     def getimgname(self):
         if self.attachids:

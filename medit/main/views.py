@@ -30,6 +30,13 @@ from blog.common_select import select_article_bytop
 ## 输出格式为Queryset
 from blog.common_select import select_article_byid
 
+## 生成文章页码标记
+## 输入blockid,每页数量,当前页码和最多同时存在的页数(若blockid=0表示全板块搜索)
+## 输出 (first_page number==1, 
+##  [continuous pages such as 3 4 5 6 7 when present ==5], 
+##  first_displaypagenumber, last_displaypagenumber, last page number)
+from blog.common_select import generate_article_page
+
 # Create your views here.
 
 ## 首页
@@ -48,25 +55,42 @@ def index(request):
 
 ## 板块页
 def block(request):
-    blockid = request.GET.get('id')
-    if blockid and blockid.isdigit():
-        blockid = int(blockid)
+    bid = request.GET.get('id')
+    if bid and bid.isdigit():
+        bid = int(bid)
     else:
-        blockid = 1
-
-    new_article_data_thisblock = select_article_bytime(blockid,(0,5))    #此板块热门文章,5条
+        bid = 1
+        
+    if request.GET.get('page'):
+        present_page = int(request.GET.get('page'))
+    else:
+        present_page = 1
+    #文章数据部分 
+    new_article_data_thisblock = select_article_bytime(bid,(5*present_page-5,5*present_page))    #此板块热门文章,5条
     new_article_data = select_article_bytime(0,(0,8))   #最新文章,全板块,8条
     hot_article_data = select_article_byhot(0,(0,5))    #热门文章,全板块,5条
-    
     block_data = select_block_bytime((0,6))             #板块列表,6条
-    present_block_data = select_block_byid(blockid)
-    
+    present_block_data = select_block_byid(bid)
     return_dict = {'block_data':block_data,
+        'presentbid':bid,
         'new_article_data_thisblock':new_article_data_thisblock,
         'new_article_data':new_article_data,
         'hot_article_data':hot_article_data,
         'present_block_data':present_block_data
         }
+    #页码部分
+    page_data = generate_article_page(bid,10,present_page,5)
+    page_dict = {'first_page':page_data[0],
+            'display_pages':page_data[1],
+            'first_display_page':page_data[2],
+            'last_display_page':page_data[3],
+            'last_page':page_data[4],
+            'display_pagenumber':page_data[3]-page_data[2]+1,
+            'present_page':present_page
+            }
+    page_dict['prepage_m1'] = present_page if present_page == 1 else present_page - 1
+    page_dict['prepage_a1'] = present_page if present_page == page_data[4] else present_page + 1    
+    return_dict['page_data'] = page_dict        
     return render(request, 'main/blocklist.html',return_dict)
     
 ## 文章页

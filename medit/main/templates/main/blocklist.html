@@ -8,27 +8,15 @@
 <meta name="description" content="" />
 <link href="{% static 'main/css/base.css' %}" rel="stylesheet">
 <link href="{% static 'main/css/index.css' %}" rel="stylesheet">
-<!--<link href="{% static 'main/css/learn.css' %}" rel="stylesheet">-->
 <!--[if lt IE 9]>
 <script src="{% static 'main/js/modernizr.js' %}"></script>
 <![endif]-->
 </head>
 <body>
 <header>
-    <!--这里有个标志LOGO图片
-    <div id="logo"><a href="/"></a></div>
-    -->
     <nav class="topnav" id="topnav">
 		<!-- 首页即全板块页 -->
         <a href="../index.html"><span>首页</span><span class="en">Protal</span></a>
-        <!--以下暂不实现
-        <a href="about.html"><span>关于我</span><span class="en">About</span></a>
-        <a href="newlist.html"><span>慢生活</span><span class="en">Life</span></a>
-        <a href="moodlist.html"><span>碎言碎语</span><span class="en">Doing</span></a>
-        <a href="share.html"><span>模板分享</span><span class="en">Share</span></a>
-        <a href="knowledge.html"><span>学无止境</span><span class="en">Learn</span></a>
-        <a href="book.html"><span>留言版</span><span class="en">Gustbook</span></a></nav>
-        -->
     </nav>
 </header>
 <article>
@@ -49,6 +37,18 @@
             <!--<span>个人博客：[<a href="/news/life/">程序人生</a>]</span>-->
         </p>
         {% endfor %}
+		<!--页码-->
+		<div>第{{page_data.present_page}}页 显示 {{page_data.first_display_page}} 到 {{page_data.last_display_page}} ，共 {{page_data.display_pagenumber}} 条
+			<a href = "../block.html?id={{presentbid}}&page={{page_data.prepage_m1}}">上一页</a>
+			<a href = "../block.html?id={{presentbid}}&page={{page_data.first_page}}">第一页</a>
+			<span>
+			{% for page in page_data.display_pages %}
+			<a href = "../block.html?id={{presentbid}}&page={{page}}">{{page}}</a>
+			{% endfor %}
+			</span>
+			<a href = "../block.html?id={{presentbid}}&page={{page_data.prepage_a1}}">下一页</a>
+			<a href = "../block.html?id={{presentbid}}&page={{page_data.last_page}}">最后一页</a>
+		</div>		
     </div>
     <aside class="right">
         <!--天气显示暂不实现
@@ -82,29 +82,7 @@
             <li><a href="../article.html?id={{article.id}}" title="{{article.title}} target="_blank">{{article.title}}</a></li>
             {% endfor %}
             </ul>
-            <!--友情链接,暂不实现
-            <h3 class="links">
-            <p>友情<span>链接</span></p>
-            </h3>
-            <ul class="website">
-            <li><a href="/">个人博客</a></li>
-            <li><a href="/">谢泽文个人博客</a></li>
-            <li><a href="/">3DST技术网</a></li>
-            <li><a href="/">思衡网络</a></li>
-            </ul>
-            -->
         </div>
-        <!-- Baidu Button BEGIN -->
-        <!-- 一些分享按钮,暂不实现
-        <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_tsina"></a><a class="bds_qzone"></a><a class="bds_tqq"></a><a class="bds_renren"></a><span class="bds_more"></span><a class="shareCount"></a></div>
-        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6574585" ></script> 
-        <script type="text/javascript" id="bdshell_js"></script> 
-        <script type="text/javascript">
-        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
-        </script>--> 
-    <!-- Baidu Button END -->
-    <!--微信二维码图片,没有哦
-    <a href="/" class="weixin"> </a>-->
     </aside>
 </article>
 <footer>

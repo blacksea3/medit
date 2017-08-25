@@ -39,7 +39,7 @@
         <!--板块最新文章,5条-->
         {% for article in new_article_data_thisblock %}
         <h3>{{article.title}}</h3>
-        <figure><img src="{{article.getimgsrc}}images/001.png"></figure>
+        <figure><img src="{{article.getimgsrc}}"></figure>
         <ul>
         <p>{{article.summary}}</p>
         <a title="/" href="../article.html?id={{article.id}}" target="_blank" class="readmore">阅读全文>></a>

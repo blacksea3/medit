@@ -53,13 +53,13 @@ def select_article_byid(aid):
 ## 输入板块id(若blockid=0表示全板块搜索),数量
 ## 输出格式为Queryset
 def select_article_byhot(bid,range):
-	return select_article_bytime(bid,range)
-	
+    return select_article_bytime(bid,range)
+    
 ## 搜索某版块高置顶文章,当前实现:按照时间由近至远寻找某版块下的文章
 ## 输入板块id(若blockid=0表示全板块搜索),数量
 ## 输出格式为Queryset
 def select_article_bytop(bid,range):
-	return select_article_bytime(bid,range)
+    return select_article_bytime(bid,range)
 
 ## 生成文章数量(某版块下的)
 ## 输入blockid(若blockid=0表示全板块搜索)
@@ -81,13 +81,17 @@ def generate_block_page(number,present,occurnumber):
     return generate_page(present,occurnumber,last_page_number)
 
 ## 生成文章页码标记
-## 输入blockid,每页数量,当前页码和最多同时存在的页数
+## 输入blockid,每页数量,当前页码和最多同时存在的页数(若blockid=0表示全板块搜索)
 ## 输出 (first_page number==1, 
 ##  [continuous pages such as 3 4 5 6 7 when present ==5], 
 ##  first_displaypagenumber, last_displaypagenumber, last page number)
 def generate_article_page(bid,number,present,occurnumber):
-    last_page_number = Article.objects.filter(blockid=bid).count()//number + 1
-    return generate_page(present,occurnumber,last_page_number)
+    if not bid:
+        last_page_number = Article.objects.all().count()//number + 1
+        return generate_page(present,occurnumber,last_page_number)
+    else:
+        last_page_number = Article.objects.filter(blockid=bid).count()//number + 1
+        return generate_page(present,occurnumber,last_page_number)
 
 #页码参考表
 '''

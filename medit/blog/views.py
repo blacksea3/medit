@@ -79,7 +79,7 @@ from blog.common_select import select_article_byid
 from blog.common_select import generate_total_article_number
     
 ## 生成文章页码标记
-## 输入blockid,每页数量,当前页码和最多同时存在的页数
+## 输入blockid,每页数量,当前页码和最多同时存在的页数(若blockid=0表示全板块搜索)
 ## 输出 (first_page number==1, 
 ##  [continuous pages such as 3 4 5 6 7 when present ==5], 
 ##  first_displaypagenumber, last_displaypagenumber, last page number)

@@ -11,7 +11,7 @@ def ck_deal_img(file):
     path = prefix + time.strftime("%Y%m%d%H%M%S",time.localtime())
     suffix = os.path.splitext(file.name)
     if suffix[1] in (".jpg",".png","gif","img"):
-        full_file_name = prefix + path + "_" + file.name
+        full_file_name = path + "_" + file.name
         des_origin_f = open(full_file_name, "wb+")
         for chunk in file.chunks():
             des_origin_f.write(chunk)

@@ -78,29 +78,7 @@
             <li><a href="../article.html?id={{article.id}}" title="{{article.title}} target="_blank">{{article.title}}</a></li>
             {% endfor %}
             </ul>
-            <!--友情链接,暂不实现
-            <h3 class="links">
-            <p>友情<span>链接</span></p>
-            </h3>
-            <ul class="website">
-            <li><a href="/">个人博客</a></li>
-            <li><a href="/">谢泽文个人博客</a></li>
-            <li><a href="/">3DST技术网</a></li>
-            <li><a href="/">思衡网络</a></li>
-            </ul>
-            -->
         </div>
-        <!-- Baidu Button BEGIN -->
-        <!-- 一些分享按钮,暂不实现
-        <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_tsina"></a><a class="bds_qzone"></a><a class="bds_tqq"></a><a class="bds_renren"></a><span class="bds_more"></span><a class="shareCount"></a></div>
-        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6574585" ></script> 
-        <script type="text/javascript" id="bdshell_js"></script> 
-        <script type="text/javascript">
-        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
-        </script>--> 
-    <!-- Baidu Button END -->
-    <!--微信二维码图片,没有哦
-    <a href="/" class="weixin"> </a>-->
     </aside>
 </article>
 <footer>
@@ -112,5 +90,20 @@
     </p>
 </footer>
 <script src="{% static 'main/js/silder.js' %}"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$']],
+      displayMath: [ ['$$','$$']],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script type="text/javascript" src="{% static 'main/MathJax/MathJax-master/MathJax.js' %}"></script>
+
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
 </body>
 </html>

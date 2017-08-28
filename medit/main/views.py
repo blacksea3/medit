@@ -37,6 +37,11 @@ from blog.common_select import select_article_byid
 ##  first_displaypagenumber, last_displaypagenumber, last page number)
 from blog.common_select import generate_article_page
 
+## 生成文章数量(某版块下的)
+## 输入blockid(若blockid=0表示全板块搜索)
+## 输出数字
+from blog.common_select import generate_total_article_number
+
 # Create your views here.
 
 ## 首页
@@ -71,15 +76,17 @@ def block(request):
     hot_article_data = select_article_byhot(0,(0,5))    #热门文章,全板块,5条
     block_data = select_block_bytime((0,6))             #板块列表,6条
     present_block_data = select_block_byid(bid)
+    total_data_number = generate_total_article_number(bid)
     return_dict = {'block_data':block_data,
         'presentbid':bid,
         'new_article_data_thisblock':new_article_data_thisblock,
         'new_article_data':new_article_data,
         'hot_article_data':hot_article_data,
-        'present_block_data':present_block_data
+        'present_block_data':present_block_data,
+        'total_data_number':total_data_number
         }
     #页码部分
-    page_data = generate_article_page(bid,10,present_page,5)
+    page_data = generate_article_page(bid,5,present_page,5)
     page_dict = {'first_page':page_data[0],
             'display_pages':page_data[1],
             'first_display_page':page_data[2],

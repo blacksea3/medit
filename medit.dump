@@ -1,0 +1,447 @@
+-- MySQL dump 10.13  Distrib 5.7.19, for Linux (x86_64)
+--
+-- Host: localhost    Database: medit
+-- ------------------------------------------------------
+-- Server version	5.7.19-0ubuntu0.16.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can add permission',2,'add_permission'),(5,'Can change permission',2,'change_permission'),(6,'Can delete permission',2,'delete_permission'),(7,'Can add user',3,'add_user'),(8,'Can change user',3,'change_user'),(9,'Can delete user',3,'delete_user'),(10,'Can add group',4,'add_group'),(11,'Can change group',4,'change_group'),(12,'Can delete group',4,'delete_group'),(13,'Can add content type',5,'add_contenttype'),(14,'Can change content type',5,'change_contenttype'),(15,'Can delete content type',5,'delete_contenttype'),(16,'Can add session',6,'add_session'),(17,'Can change session',6,'change_session'),(18,'Can delete session',6,'delete_session'),(19,'Can add blog',7,'add_blog'),(20,'Can change blog',7,'change_blog'),(21,'Can delete blog',7,'delete_blog'),(22,'Can add article',8,'add_article'),(23,'Can change article',8,'change_article'),(24,'Can delete article',8,'delete_article'),(25,'Can add block',9,'add_block'),(26,'Can change block',9,'change_block'),(27,'Can delete block',9,'delete_block'),(28,'Can add user',10,'add_user'),(29,'Can change user',10,'change_user'),(30,'Can delete user',10,'delete_user'),(31,'Can add attach',11,'add_attach'),(32,'Can change attach',11,'change_attach'),(33,'Can delete attach',11,'delete_attach');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$36000$NP6RYQMtCv7T$0UwCMrdaxPYbqIHsAsty96xc1IikXoENMcjfNHF7qXA=','2017-08-24 10:09:26.560240',1,'blacksea3','','','17865191779@163.com',1,1,'2017-08-12 07:14:55.382968');
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
+  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_user_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_article`
+--
+
+DROP TABLE IF EXISTS `blog_article`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `blog_article` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `blockid` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `content` longtext NOT NULL,
+  `modifytime` datetime(6) NOT NULL,
+  `remark` varchar(50) NOT NULL,
+  `attachids` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_article`
+--
+
+LOCK TABLES `blog_article` WRITE;
+/*!40000 ALTER TABLE `blog_article` DISABLE KEYS */;
+INSERT INTO `blog_article` VALUES (1,1,'360浏览器测试','<p><s><em><strong>dsadasdsfdsdfsfdsfdfdsfd大水水大大水水大大撒旦撒旦 的撒大苏打撒发发达发达 发奋读书发</strong></em></s></p>\n\n<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\" summary=\"撒旦撒旦\">\n	<caption>的撒大苏打上</caption>\n	<tbody>\n		<tr>\n			<th scope=\"row\">得到</th>\n			<td>&nbsp;</td>\n		</tr>\n		<tr>\n			<th scope=\"row\">&nbsp;</th>\n			<td>是</td>\n		</tr>\n		<tr>\n			<th scope=\"row\">&nbsp;</th>\n			<td>&nbsp;</td>\n		</tr>\n	</tbody>\n</table>\n\n<p>&nbsp;</p>\n','2017-08-13 07:07:58.818391','晚饭dassfadasdas',''),(2,1,'文章2','<p>东方时尚短发短发散发三大</p>\n\n<p>我传个图片哦！！！</p>\n\n<p><img alt=\"\" src=\"/static/ck_upload/20170824144827_QQ截图20170808094635.jpg\" style=\"height:60px; width:60px\" /><img alt=\"\" src=\"/static/ck_upload/20170825084536_QQ截图20170808094635.jpg\" style=\"height:60px; width:60px\" /></p>\n','2017-08-25 14:39:34.095063','范德萨飞洒','4'),(3,2,'新建一个django项目时 测试运行失败 描述：DisallowedHost','<p>我在服务器上新建一个django项目时 测试运行 python3 manage.py runserver 0.0.0:8070 出现了</p>\n\n<blockquote>\n<p>DisallowedHost at / Invalid HTTP_HOST header: &#39;106.14.181.123:8070&#39;. You may need to add u&#39;106.14.181.123&#39; to ALLOWED_HOSTS.</p>\n</blockquote>\n\n<p>这种情况，按照提示，在默认生成的setting.py中将ip添加进 ALLOWED_HOSTS = [xxx]或者修改成 ALLOWED_HOSTS = [&#39;*&#39;]即可，我尝试了后一种方法，允许任何ip访问，重新运行project，浏览器访问106.14.181.123:8070，成功。</p>\n','2017-08-21 16:30:25.281084','',''),(4,2,'django设置当浏览器关闭后session失效的方法','<p>制作登陆页时有时需要添加是否记住用户登录状态的逻辑，我想法是若记住登陆状态，则设置一个长期session记录用户登录状态，关闭浏览器后仍然可以自动登陆，否则关闭浏览器后那个session失效。</p>\n\n<p>从网上查了查方法，使用下面这个语句</p>\n\n<p>request.session.set_expiry(value)&nbsp;&nbsp;&nbsp;&nbsp; 可以传递四种不同的值给它：</p>\n\n<ol>\n	<li>如果value是个整数，session会在些秒数后失效。</li>\n	<li>如果value是个datatime或timedelta，session就会在这个时间后失效。</li>\n	<li>如果value是0,用户关闭浏览器session就会失效。</li>\n	<li>如果value是None,session会依赖全局session失效策略。</li>\n</ol>\n\n<p>使用第三种方法，可行</p>\n','2017-08-20 17:00:25.676879','',''),(5,2,'django模板中文乱码','<p>我在使用下载的html模板时，通过django显示出来，出现因乱码导致server error（500）。</p>\n\n<p>我的html中<span style=\"color:#e74c3c\">meta已经写明了是utf-8</span>，并且<span style=\"color:#e74c3c\">views.py也保存为 utf-8编码</span>&nbsp; 开头加上了<span style=\"color:#e74c3c\"># -*-coding:utf-8 -*-</span>&nbsp;&nbsp;&nbsp;&nbsp; 但仍然出现这个问题</p>\n\n<p>后来无意中重新保存了一下html文件，才发现这个<span style=\"color:#e74c3c\">html原来没有以utf-8编码保存，遂修改保存编码格式</span>，问题得以解决。</p>\n\n<p>&nbsp;</p>\n\n<p>相关django模板中文显示乱码问题，可参考<a href=\"http://blog.csdn.net/zhang103886108/article/details/46874735\">用django 模板中文显示乱码 </a></p>\n','2017-08-22 09:54:28.805756','',''),(6,5,'本站搭建流程（PART One）（ubuntu+nginx+uwsgi+django+mysql）','<p>我之前学习过django，但只是限于在笔记本上运行django自带的服务器，现在想要实际操作一下，搭建一个搭载django服务的公开的网站服务器。</p>\n\n<p>服务器类型：Ubuntu 16.04.2 阿里云</p>\n\n<p>步骤：</p>\n\n<ol>\n	<li>修改apt源，更新apt</li>\n	<li>查看python版本，安装pip</li>\n	<li>安装django，运行本地服务器测试</li>\n	<li>安装nginx，测试nginx功能，访问静态文件</li>\n	<li>安装uwsgi，连接uwsgi和django</li>\n	<li>连接nginx、uwsgi和django</li>\n	<li>安装PyMySQL</li>\n	<li>连接python和mysql，用django的admin管理数据库</li>\n	<li>编写后端逻辑、使用一些前端模板，进行CMS和blog主界面的搭建</li>\n</ol>\n\n<p>&nbsp;</p>\n\n<h1>&nbsp;1、修改apt源，更新apt</h1>\n\n<p>对刚拿到手的服务器，首先检查这个服务器各个软件等情况，于是运行</p>\n\n<pre>\n<code class=\"language-makefile\">apt-get update\napt-get upgrade</code></pre>\n\n<p>然而我发现，没有需要更新的。接着我准备安装aptitude，</p>\n\n<pre>\n<code class=\"language-makefile\">apt-get install aptitude</code></pre>\n\n<p>结果居然找不到这个包。网络上肯定没有问题，于是我去找了找apt源设置，结果果然有问题：</p>\n\n<p>apt源信息在我的服务器上位置是/etc/apt/sources.list 发现默认的这个文件夹是空的，故赶紧加上网上搜的阿里源</p>\n\n<pre>\n<code class=\"language-makefile\">deb-src http://archive.ubuntu.com/ubuntu xenial main restricted \ndeb http://mirrors.aliyun.com/ubuntu/ xenial main restricted\ndeb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted multiverse universe \ndeb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted\ndeb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted multiverse universe \ndeb http://mirrors.aliyun.com/ubuntu/ xenial universe\ndeb http://mirrors.aliyun.com/ubuntu/ xenial-updates universe\ndeb http://mirrors.aliyun.com/ubuntu/ xenial multiverse\ndeb http://mirrors.aliyun.com/ubuntu/ xenial-updates multiverse\ndeb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse\ndeb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse \ndeb http://archive.canonical.com/ubuntu xenial partner\ndeb-src http://archive.canonical.com/ubuntu xenial partner\ndeb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted \ndeb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted multiverse universe \ndeb http://mirrors.aliyun.com/ubuntu/ xenial-security universe\ndeb http://mirrors.aliyun.com/ubuntu/ xenial-security multiverse\n</code></pre>\n\n<p>然后再次更新软件，安装aptitude，成功。</p>\n\n<p>&nbsp;</p>\n\n<h1>2、查看python版本，安装pip</h1>\n\n<p>通过运行python和python3，我发现服务器上有两版本的python。&nbsp;&nbsp; python 2.7.12&nbsp;&nbsp; python 3.5.2</p>\n\n<p>考虑到python3为新版，我准备安装python3对应的pip，结果发现pip已经预安装了，python3对应的是pip3</p>\n\n<p>这倒省下了一些功夫。安装pip原因是之后的uwsgi和django以及可能的其他库都可以用python自带的pip包管理器管理。</p>\n\n<h1>3、安装django，运行本地服务器测试</h1>\n\n<p>第三步是安装django，我们采用python自带的pip包管理器</p>\n\n<pre>\n<code class=\"language-makefile\">pip3 install django</code></pre>\n\n<p>安装完毕之后，找一个放django工程的地方，测试一下django是否安装成功</p>\n\n<pre>\n<code class=\"language-makefile\">cd /home/\npython3 django-admin.py startproject medit #medit是工程名字\ncd medit\npython3 django-admin.py runserver 0.0.0:8070</code></pre>\n\n<p>然后在浏览器输入http://106.14.181.123:8070 结果报错，</p>\n\n<pre>\n<code class=\"language-makefile\">DisallowedHost at / Invalid HTTP_HOST header: \'106.14.181.123:8070\'. You may need to add u\'106.14.181.123\' to ALLOWED_HOSTS.</code></pre>\n\n<p>错误解决方案即错误提示，根据此文章： <a href=\"http://106.14.181.123/main/article.html/?id=3\">新建一个django项目时 测试运行失败 描述：DisallowedHost </a></p>\n\n<p>我在默认生成的setting.py中修改 ALLOWED_HOSTS = [] 至 ALLOWED_HOSTS = [&#39;*&#39;] 问题解决</p>\n\n<p>刷新浏览器 显示蓝色的It worked！界面</p>\n\n<p>&nbsp;</p>\n\n<p>第二部分传送门： <a href=\"http://106.14.181.123/main/article.html/?id=7\">本站搭建流程（PART Two）（ubuntu+nginx+uwsgi+django+mysql）</a></p>\n\n<p>&nbsp;</p>\n','2017-09-14 07:32:03.458998','','\n			\n				       \n			'),(7,3,'本站搭建流程（PART Two）（ubuntu+nginx+uwsgi+django+mysql）','<p>前一部分传送门：<a href=\"http://106.14.181.123/main/article.html/?id=6\">本站搭建流程（ubuntu+nginx+uwsgi+django+mysql）（PART One）</a></p>\n\n<h1>4、安装nginx，测试nginx功能，访问静态文件</h1>\n\n<p>接下来进行nginx的安装配置和测试</p>\n\n<p>首先</p>\n\n<pre>\n<code class=\"language-makefile\">apt-get install nginx</code></pre>\n\n<p>nginx相关命令</p>\n\n<pre>\n<code class=\"language-makefile\">service nginx start #启动\nnginx -s reload #重启\nnginx -s stop #停止</code></pre>\n\n<p>直接启动nginx，在默认端口80访问，浏览器输入http://106.14.181.123:80 可以看到Welcome to nginx！说明nginx安装无误</p>\n\n<p>接下来修改nginx配置文件，我的习惯是地址之类的配置在sites-enabled/default修改</p>\n\n<pre>\n<code class=\"language-makefile\">cd /etc/nginx/\nvim sites-enabled/default</code></pre>\n\n<p>作为测试，简单地在server{}里面添加</p>\n\n<pre>\n<code class=\"language-nginx\">location /static/main/ {\n#这个地方指定被访问的文件夹位置\n    root   /home;\n}\n</code></pre>\n\n<p>然后放一个 /home/static/1.txt</p>\n\n<p>访问106.14.181.123/static/main/1.txt看到结果即可</p>\n\n<h1>5、 安装uwsgi，连接uwsgi和django</h1>\n\n<p>接下来是uwsgi的调试，首先采用pip安装uwsgi：</p>\n\n<pre>\n<code class=\"language-markdown\">pip3 install uwsgi</code></pre>\n\n<p>然后进行django和uwsgi的连接测试，使用这样的命令来测试，注意目录和项目名字不要填错</p>\n\n<pre>\n<code class=\"language-makefile\">uwsgi --http :8070 --chdir /home/medit/medit --module medit.wsgi</code></pre>\n\n<p>启动后，在浏览器访问8070端口，可以看到和单独运行django同样的成功界面，说明django和uwsgi连接成功</p>\n\n<h1>6、 连接nginx、uwsgi和django</h1>\n\n<p>首先编写一个初始化脚本medit_uwsgi.ini</p>\n\n<pre>\n<code class=\"language-nginx\"># medit_uwsgi.ini file\n[uwsgi]\n\n# Django-related settings\n# the base directory (full path)\nchdir           = /home/medit/medit\n# Django\'s wsgi file\nmodule          = medit.wsgi\n# the virtualenv (full path)\n# home          = /path/to/virtualenv\n\n# process-related settings\n# master\nmaster          = true\n\n# maximum number of worker processes\nprocesses       = 10\n\n# pid文件\npidfile         = /home/medit_uwsgi.pid\n\n# 启动uwsgi的用户名和用户组\nuid             = root\ngid             = root\n\n# the socket (use the full path to be safe)\nsocket          = :8001\n\n# clear environment on exit\nvacuum          = true\n# 设置日志目录\ndaemonize       = /home/medit_uwsgi.log\n</code></pre>\n\n<p>然后修改nginx.conf配置文件 在/etc/nginx/nginx.conf 注意这里我们用8001端口作为nginx-uwsgi连接的桥梁</p>\n\n<p>在http{}中加入以下部分，我是加到了最后面</p>\n\n<pre>\n<code class=\"language-nginx\">upstream django {\n    server 127.0.0.1:8001; # for a web port socket\n}\n</code></pre>\n\n<p>然后停止刚刚的uwsgi服务，使用初始化文件方法启动uwsgi服务</p>\n\n<pre>\n<code class=\"language-makefile\">uwsgi --ini medit_uwsgi.ini\n</code></pre>\n\n<p>PS:安全停止这样启动的uwsgi服务方法为</p>\n\n<pre>\n<code class=\"language-makefile\">uwsgi --stop /home/medit_uwsgi.pid</code></pre>\n\n<p>接下来重启nginx服务</p>\n\n<pre>\n<code class=\"language-makefile\">nginx -s reload</code></pre>\n\n<p>在浏览器访问nginx对应的80端口(在/etc/nginx/sites-enabled/default文件)指定的，可以看到与之前相同的蓝色It worked!界面，说明连接成功</p>\n\n<p>&nbsp;</p>\n\n<p>下一部分传送门：<a href=\"http://106.14.181.123/main/article.html/?id=8\">本站搭建流程（PARTThree）（ubuntu+nginx+uwsgi+django+mysql）</a></p>\n','2017-08-24 09:58:22.916130','',''),(8,3,'本站搭建流程（PARTThree）（ubuntu+nginx+uwsgi+django+mysql）','<p>前一部分传送门： <a href=\"http://106.14.181.123/main/article.html/?id=7\">本站搭建流程（PART Two）（ubuntu+nginx+uwsgi+django+mysql） </a></p>\n\n<h1>7、 安装PyMySQL</h1>\n\n<p>接下来我们将mysql数据库和python连接起来。</p>\n\n<p>首先安装mysql服务器</p>\n\n<pre>\n<code class=\"language-makefile\">aptitude install mysql-server</code></pre>\n\n<p>然后由于使用的是python3，故安装pymysql</p>\n\n<pre>\n<code class=\"language-makefile\">pip3 install PyMySQL</code></pre>\n\n<p>如果由于名字不对安装不了，则先大致搜索一下，然后找PyMySQL包安装</p>\n\n<pre>\n<code class=\"language-makefile\">pip3 search PyMySQL</code></pre>\n\n<h1>8、 连接python和mysql，用django的admin管理数据库</h1>\n\n<p>PyMySQL安装结束后，修改django项目的settings.py的database配置</p>\n\n<pre>\n<code class=\"language-python\">DATABASES = {\n    \'default\': {\n        \'ENGINE\': \'django.db.backends.mysql\',\n        \'NAME\': \'medit\', #数据库的名字，应该首先手动在mysql新建一个\n        \'USER\': \'root\', #用户名字\n        \'PASSWORD\': \'xxxxxx\', #密码\n    }\n}\n</code></pre>\n\n<p>然后在urls.py添加admin相关内容</p>\n\n<pre>\n<code class=\"language-php\">url(r\'^admin/\', admin.site.urls),\n</code></pre>\n\n<p>接下来将admin的静态文件移过来，移的位置由settings.py的STATIC_ROOT指定，建议移动完之后手动查看一下文件是不是在自己想要的地方。</p>\n\n<pre>\n<code class=\"language-makefile\">python3 manage.py collectstatic</code></pre>\n\n<p>然后使用之前的方式用nginx-uwsgi-django的方式启动整个网站</p>\n\n<p>这时访问http://106.14.181.123:80/admin会发现样式表等都没有加入，因此需要根据url中静态文件url访问，在nginx的default配置文件中将相应的静态文件访问加入。重启nginx以查看静态文件访问是否成功。</p>\n\n<p>接下来添加admin超级管理员，如果之前访问网站没有出现类似数据库无法访问错误，以及此次添加超级管理员没有问题，说明mysql数据库的连接没有问题。</p>\n\n<pre>\n<code class=\"language-makefile\">python3 manage.py createsuperuser</code></pre>\n\n<p>重启uwsgi服务后就可以访问106.14.181.123:80/admin 使用 超级管理员账号登录进去管理数据库了，注意的是，我自己不太清楚能不能在admin界面添加新的表，因此我是先在models.py添加了表，接下来使用makemigrations/migrate迁移的表再用的admin管理。</p>\n\n<pre>\n<code class=\"language-makefile\">python3 manage.py makemigrations\n\npython3 manage.py migrate</code></pre>\n\n<h1>9、 编写后端逻辑、使用一些前端模板，进行CMS和blog主界面的搭建</h1>\n\n<p>第9步因人而异，并且叙述起来过为复杂，故省去，通过前8步，一个ubuntu+nginx+uwsgi+django+mysql的网站搭建和各部分的连接就完成了。:)</p>\n','2017-08-25 06:53:23.154472','','1'),(9,4,'ckeditor上传图片','<p>ckeditor默认没有本地上传图片的选项，所以要配置一下。</p>\n\n<ol>\n	<li>修改ckeditor配置文件</li>\n	<li>编写对应的后端逻辑</li>\n</ol>\n\n<h1>&nbsp;1、修改ckeditor配置文件</h1>\n\n<p>在ckeditor/plugins/image/dialogs/image.js中 搜索 <span style=\"color:#362e2b; font-family:Calibri; font-size:16px\">upload</span> 找到 <span style=\"color:red; font-family:Calibri; font-size:16px\">id:&#39;Upload&#39;,hidden:true</span> 也可能是 <span style=\"color:red; font-family:Calibri; font-size:16px\">id:&#39;Upload&#39;,hidden:!0</span></p>\n\n<p>将True/!0改成False/0 即可开启图片上传按钮</p>\n\n<p>&nbsp;</p>\n\n<p>然后找到 <span style=\"font-size:16px\"><span style=\"font-family:Calibri\">b.config.image_previewText</span></span> 把<span style=\"font-size:16px\"><span style=\"font-family:Calibri\">b.config.image_previewText|| 后面单引号括着的删了，可以去掉预览窗口的一大堆外文</span></span></p>\n\n<p>接着在<span style=\"font-size:16px\"><span style=\"color:red\"><span style=\"font-family:Calibri\">ckeditor/config.js</span></span></span>中添加 <span style=\"font-family:Calibri; font-size:16px\">config.filebrowserUploadUrl=&quot;actions/ckeditorUpload&quot;;</span>&nbsp;&nbsp; 指明后端处理的url</p>\n\n<p>&nbsp;</p>\n\n<p>图片上传按钮：<img alt=\"\" src=\"/static/ck_upload/20170825084712_图片上传按钮.jpg\" style=\"height:42px; width:46px\" /></p>\n\n<p>图片上传具体内容：注意：上传这个菜单就是后来添加上去的<img alt=\"\" src=\"/static/ck_upload/20170825084733_图片上传按钮具体内容.jpg\" style=\"height:622px; width:653px\" /></p>\n\n<h1>&nbsp;2、编写对应的后端逻辑</h1>\n\n<p>我用的是django，贴出代码如下，供以后借鉴用</p>\n\n<p>&nbsp;views.py中内容为</p>\n\n<pre>\n<code class=\"language-python\">###views.py\n\n## ckeditor上传图片,这里关掉csrf\n@csrf_exempt\ndef ck_upload_img(request):\n    if request.method == \'POST\':\n        callback = request.GET.get(\'CKEditorFuncNum\')  \n        f = request.FILES[\"upload\"]\n        if not f:\n            res = \"&lt;script&gt;window.parent.CKEDITOR.tools.callFunction(\"+callback+\",\'/\"+\"NO FILE\"+\"\', \'\');&lt;/script&gt;\"\n            return HttpResponse(res)\n        else:\n            code,para = ck_deal_img(f)\n        if not code:\n            res = \"&lt;script&gt;window.parent.CKEDITOR.tools.callFunction(\"+callback+\",\'/\"+para+\"\', \'\');&lt;/script&gt;\"\n            return HttpResponse(res)\n        else:\n            res = \"&lt;script type=\\\"text/javascript\\\"&gt;\" + \\\n                \"window.parent.CKEDITOR.tools.callFunction(\" + callback + \",\'\',\" + \"\'\" + para + \"\'\" + \");\" + \\\n                \"&lt;/script&gt;\"\n            return HttpResponse(res)\n    else:\n        raise Exception(\"This method shouldn\'t be GET!!!\")</code></pre>\n\n<p>&nbsp;upload.py中内容为</p>\n\n<pre>\n<code class=\"language-python\">### upload.py\n\n## ckeditor上传图片,处理函数\n## 输入文件(类似字典)\n## 输出(响应,参数) 0正确,参数:文件名 1错误,参数:错误提示\ndef ck_deal_img(file):\n    prefix = \"static/ck_upload/\"\n    path = prefix + time.strftime(\"%Y%m%d%H%M%S\",time.localtime())\n    suffix = os.path.splitext(file.name)\n    if suffix[1] in (\".jpg\",\".png\",\"gif\",\"img\"):\n        full_file_name = path + \"_\" + file.name\n        des_origin_f = open(full_file_name, \"wb+\")\n        for chunk in file.chunks():\n            des_origin_f.write(chunk)\n        des_origin_f.close()\n        return (0, full_file_name)\n    else:\n        return (1, \"文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）\")</code></pre>\n\n<p>&nbsp;</p>\n','2017-08-28 13:23:19.762179','','7'),(10,4,'将ckeditor引入项目','<p>对django来说一般有两种方法，下载djano-ckeditor或者下载单独的ckeditor js包</p>\n\n<p>我采用后一种方法。</p>\n\n<ol>\n	<li>首先下载任意的ckeditor包，解压，做静态文件处理。</li>\n	<li>在需要引入ckeditor的html添加ckeditor/keditor.js，加到&lt;head&gt;里面，路径据情况修改，这是django使用html模板的。\n	<pre>\n<code class=\"language-html\">&lt;script src=\"{% static \'blog/ckeditor/ckeditor/ckeditor.js\' %}\"&gt;&lt;/script&gt;</code></pre>\n	</li>\n	<li>\n	<p>设置textarea区域，并在html最后添加一段javascript：</p>\n\n	<pre>\n<code class=\"language-html\">&lt;--注意这里的content是想要一开始就呈现在ckeditor编辑器里面的内容,是富文本的--&gt;\n&lt;textarea name=\"articlecontent\" id=\"articlecontent\"&gt;{{article_data.0.content}}&lt;/textarea&gt;</code></pre>\n\n	<pre>\n<code class=\"language-html\">&lt;!--注意这里的articlecontent要与刚刚的textarea的id一致--&gt;\n&lt;script&gt;\n    CKEDITOR.replace( \'articlecontent\' , {uiColor: \'#9AB8F3\'});\n&lt;/script&gt;</code></pre>\n\n	<p>&nbsp;</p>\n	</li>\n</ol>\n\n<p>&nbsp;然后就可以用了</p>\n\n<p>备注：如果需要用js获取ckeditor内容，与后端交互，使用</p>\n\n<pre>\n<code class=\"language-javascript\">var ckeditor_content = CKEDITOR.instances.articlecontent.getData();</code></pre>\n\n<p>&nbsp;</p>\n','2017-08-25 13:03:06.637230','','\n			       \n			'),(11,1,'没有首页图的文章','<p>d&#39;sa&#39;s&#39;d</p>\n','2017-08-25 13:07:07.796964','dsasd大使撒旦','\n			       \n			'),(12,1,'dsadassadads ','','2017-08-25 14:39:17.326221','sdas','\n			       \n			'),(13,4,'form表单中button自动提交表单的问题','<p>需求：html模板中有一个表单，里面我想通过一个按键控制文件上传，同时后端验证、保存这个文件（&lt;input type=file /&gt;）然后提交表单时不要再上传文件了，但是我写的button总是会出发表单提交，经网上查询，有两种解决方法：</p>\n\n<ol>\n	<li>\n	<p>经过测试 将button标签这只上 type=&quot;button&quot;的属性 即可解决问题</p>\n	</li>\n	<li>\n	<p>&nbsp;</p>\n\n	<p>用&lt;input type=&quot;button&quot;&gt;&nbsp; 标签也可以解决问题</p>\n\n	<p>&nbsp;</p>\n	</li>\n</ol>\n\n<p>&nbsp;原因： 应始终为按钮规定 type 属性。Internet Explorer 的默认类型是 &quot;button&quot;，而其他浏览器中（包括 W3C 规范）的默认值是 &quot;submit&quot;。</p>\n\n<p>传送门：<a href=\"http://blog.163.com/ddh0220@126/blog/static/2639376820117244812612/\">关于form表单底下 button自动提交表单的问题</a></p>\n','2017-08-25 14:48:36.405713','',''),(14,4,'简单的jquery的validate.js表单验证方法','<p>自制的后台中经常需要提交文章、板块等信息，这个时候总是需要验证一些字段是否合法，validate.js可以方便地提供表单验证功能。</p>\n\n<ol>\n	<li>下载validata.js</li>\n	<li>html引入</li>\n	<li>js编写</li>\n</ol>\n\n<h1>1、下载validata.js</h1>\n\n<p>首先下载validate.js包</p>\n\n<h1>2、html引入</h1>\n\n<p>注意要引入jquery，第二个是validate函数，第三个是中文设置，设置表单报错文字的，我是引到了body最后面，第三个js具体内容贴在最后</p>\n\n<pre>\n<code class=\"language-html\">&lt;script type=\"text/javascript\" src=\"{% static \'blog/lib/jquery.validation/1.14.0/jquery.validate.js\' %}\"&gt;&lt;/script&gt;\n&lt;script type=\"text/javascript\" src=\"{% static \'blog/lib/jquery.validation/1.14.0/validate-methods.js\' %}\"&gt;&lt;/script&gt;\n&lt;script type=\"text/javascript\" src=\"{% static \'blog/lib/jquery.validation/1.14.0/messages_zh.js\' %}\"&gt;&lt;/script&gt;</code></pre>\n\n<p>然后引入html加载完毕后运行的函数，贴在第三部分</p>\n\n<h1>3、js编写</h1>\n\n<pre>\n<code class=\"language-javascript\">$(function(){\n    //表单验证\n    $(\"#form-article-add\").validate({\n        //注意：这里这些形如blocktitle的标记是form里面的name,不是id!!!\n        //其他rules可参照网上其他相关帖子\n        //可以直接使用，具体含义也参照网上其他相关帖子\n        rules:{\n            articletitle:{\n                required:true,       //不能为空\n                maxlength:50,        //最长为50，注意中英文一个字符都是长度：1\n            },\n            articlecontent:{\n                required:true,\n            },\n            articleremark:{\n                maxlength:50,\n            },          \n        },\n        onkeyup:false,\n        focusInvalid:true,\n        success:\"valid\",\n        submitHandler:function(form)\n        {\n            //放你想提交的函数，比如ajax\n        }\n    });\n\n    state = \"pending\";\n});</code></pre>\n\n<p>messages_zh.js</p>\n\n<pre>\n<code class=\"language-javascript\">(function( factory ) {\n	if ( typeof define === \"function\" &amp;&amp; define.amd ) {\n		define( [\"jquery\", \"../jquery.validate\"], factory );\n	} else {\n		factory( jQuery );\n	}\n}(function( $ ) {\n\n/*\n * Translated default messages for the jQuery validation plugin.\n * Locale: ZH (Chinese, 中文 (Zhōngwén), 汉语, 漢語)\n */\n$.extend($.validator.messages, {\n	required: \"这是必填字段\",\n	remote: \"请修正此字段\",\n	email: \"请输入有效的电子邮件地址\",\n	url: \"请输入有效的网址\",\n	date: \"请输入有效的日期\",\n	dateISO: \"请输入有效的日期 (YYYY-MM-DD)\",\n	number: \"请输入有效的数字\",\n	digits: \"只能输入数字\",\n	creditcard: \"请输入有效的信用卡号码\",\n	equalTo: \"你的输入不相同\",\n	extension: \"请输入有效的后缀\",\n	maxlength: $.validator.format(\"最多可以输入 {0} 个字符\"),\n	minlength: $.validator.format(\"最少要输入 {0} 个字符\"),\n	rangelength: $.validator.format(\"请输入长度在 {0} 到 {1} 之间的字符串\"),\n	range: $.validator.format(\"请输入范围在 {0} 到 {1} 之间的数值\"),\n	max: $.validator.format(\"请输入不大于 {0} 的数值\"),\n	min: $.validator.format(\"请输入不小于 {0} 的数值\")\n});\n\n}));</code></pre>\n\n<p>相关帖子传送门：<a class=\"postTitle2\" href=\"http://www.cnblogs.com/si-shaohua/p/3780321.html\" id=\"cb_post_title_url\">jquery.validate.js表单验证</a></p>\n','2017-08-25 15:04:45.909129','','       '),(15,3,'mysql修改数据库表和表中的字段的编码格式的修改','<p>问题提出背景：我的django项目连接了mysql，奇怪的是在windows上调试时，我往mysql直接写入中文字符没有问题，但是在linux上却出现类似编码错误的提示，这使得我来查看linux上mysql表的编码，发现所有已经建好的表（默认）编码都是latin。需要批量修改编码了。</p>\n\n<p>经网上查询有两种方法，一、以sql备份数据库，然后将里面建table时的编码修改成utf8。二、手动修改各表的编码。</p>\n\n<p>考虑到用到中文的表数量不多，使用后一种方法。</p>\n\n<pre>\n<code class=\"language-sql\">alter table `tablename` convert to character set utf8;</code></pre>\n\n<p>这样可以一次修改一个表，非常方便。</p>\n\n<p>参考链接：<a href=\"http://blog.csdn.net/luo4105/article/details/50804148\">mysql修改数据库表和表中的字段的编码格式的修改 </a></p>\n','2017-08-25 15:29:25.763620','',''),(16,4,'html ol li 不显示序号','<p>我的前台页显示ol li时没有了序号，感到非常奇怪，由于是网上下载的模板，故问题应出现在css设置等地方。</p>\n\n<p>经查询和确认，css中进行了这样的设置</p>\n\n<pre>\n<code class=\"language-css\">*{margin:0;padding:0;}</code></pre>\n\n<p>重置浏览器默认样式，ol标签的左内边距就被重置为0. 导致序号消失。</p>\n\n<p>故恢复的方法就是设置回ol的左内边距。方法：</p>\n\n<pre>\n<code class=\"language-css\">ol{padding-left: 20px;}</code></pre>\n\n<p>或者</p>\n\n<pre>\n<code class=\"language-css\">ol li{\n    list-style-type:decimal;\n    list-style-position:inside;\n}</code></pre>\n\n<p>注意后一种方法会使得 在IE 6/7 中会导致所有 li 的序号全部变成1. 如果要考虑IE 6/7，请使用方法一。</p>\n\n<p>参考链接：<a href=\"https://www.51-n.com/t-4198-1-1.html\">html css ol li 不显示序号或序号全部为1</a></p>\n\n<p>&nbsp;</p>\n','2017-08-25 15:34:00.567493','',''),(17,1,'测试公式编辑','<p>我来测试了！！！！，下面是一个独立公式：</p>\n\n<p>$$L_{cal}(a,b)=a^2+b^2$$</p>\n\n<p>独立公式结束</p>\n\n<p>这是一个行中公式：$L_{cal}(a,b)=a^2+b^2$</p>\n','2017-08-27 13:21:33.701919','',''),(18,4,'mathjax使用——公式页面显示','<p>需要在网站上放上公式，又不想截图怎么办？</p>\n\n<p>Mathjax是一款较好的网页公式显示插件。使用方法：</p>\n\n<p>1、引用官网配置和mathjax.js。由于担心网络问题，未采用这种方法。</p>\n\n<p>2、引用本地配置，着重介绍这种方法。</p>\n\n<p>首先下载mathjax.js。我选择的是从github下载zip下来的。</p>\n\n<p>其次在html中加入</p>\n\n<pre>\n<code class=\"language-html\">&lt;script type=\"text/x-mathjax-config\"&gt;\n  MathJax.Hub.Config({\n    extensions: [\"tex2jax.js\"],\n    jax: [\"input/TeX\", \"output/HTML-CSS\"],\n    tex2jax: {\n      inlineMath: [ [\'$\',\'$\'] ],\n      displayMath: [ [\'$$\',\'$$\'] ],\n      processEscapes: true\n    },\n    \"HTML-CSS\": { availableFonts: [\"TeX\"] }\n  });\n&lt;/script&gt;\n&lt;!--这个地方放你的本地路径--&gt;\n&lt;script type=\"text/javascript\" src=\"path-to-MathJax/MathJax.js\"&gt;   </code></pre>\n\n<p><span style=\"color:#e74c3c\">注意两段script顺序不能反！</span></p>\n\n<p>此处参考 <a href=\"http://mathjax-chinese-doc.readthedocs.io/en/latest/configuration.html#cdnmathjax\">加载和配置MathJax</a></p>\n\n<p>3、通过这样的配置，行内公式用两个￥￥框起来，行间公式用四个￥￥￥￥框起来，每边各两个。（注意将￥改成美元符号$）</p>\n\n<p>4、在富文本编辑器中手写公式：我参考的学习网址为： <a href=\"http://www.360doc.com/content/14/0930/23/9482_413578190.shtml\">MathJax使用LaTex语法编写数学公式教程</a></p>\n','2017-08-28 13:34:32.021235','','8'),(19,5,'booth算法计算乘法','<h1>booth算法计算乘法</h1>\n\n<p>1、用来手算的booth算法。原则：将连续多个二进制的1转化为两个数相减。例如：对带符号的二进制数11011101，有</p>\n\n<p>$$11011101=-2^7+2^6+(2^4+2^3+2^2)+2^0$$</p>\n\n<p>转化为</p>\n\n<p>$$ 11011101=-2^7+2^6+(2^5-2^2)+2^0$$</p>\n\n<p>注意括号中的连续多个1，可以转化为两个不同位的1相减</p>\n\n<p>&nbsp;</p>\n\n<p>2、改进的booth算法。</p>\n\n<p>考虑以下的公式，对偶数位有符号二进制数，<span style=\"color:#e74c3c\">给最低位补上0</span>，有：</p>\n\n<p>若$$Y=-{2}^{2n-1}y_{2n-1}+2^{2n}y_2n++2^{2n-2}y_{2n-2}\\cdots+2^1y_1+y_0+y_{-1} 其中 y_{-1}=0$$</p>\n\n<p>则Y可以写作</p>\n\n<p>$$Y=2^{2n-2}(-2y_{2n-1}+y_{2n-2}+y_{2n-3})+2^{2n-4}(-2y_{2n-3}+y_{2n-4}+y_{2n-5})+\\cdots$$</p>\n\n<p>$$+2^0(-2y_1+y_0+y_{-1})$$</p>\n\n<p>然后对于Y，每三位二进制数一组，我们可以得出映射关系：</p>\n\n<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:257px; table-layout:fixed; width:500px\">\n	<tbody>\n		<tr>\n			<td colspan=\"3\" rowspan=\"1\">原始数据</td>\n			<td>转换数据</td>\n		</tr>\n		<tr>\n			<td>$X_{2n+1}$</td>\n			<td>$X_{2n}$</td>\n			<td>$X_{2n-1}$</td>\n			<td>X_{out}</td>\n		</tr>\n		<tr>\n			<td>0</td>\n			<td>0</td>\n			<td>0</td>\n			<td>0</td>\n		</tr>\n		<tr>\n			<td>0</td>\n			<td>0</td>\n			<td>1</td>\n			<td>1</td>\n		</tr>\n		<tr>\n			<td>0</td>\n			<td>1</td>\n			<td>0</td>\n			<td>1</td>\n		</tr>\n		<tr>\n			<td>0</td>\n			<td>1</td>\n			<td>1</td>\n			<td>2</td>\n		</tr>\n		<tr>\n			<td>1</td>\n			<td>0</td>\n			<td>0</td>\n			<td>-2</td>\n		</tr>\n		<tr>\n			<td>1</td>\n			<td>0</td>\n			<td>1</td>\n			<td>-1</td>\n		</tr>\n		<tr>\n			<td>1</td>\n			<td>1</td>\n			<td>0</td>\n			<td>-1</td>\n		</tr>\n		<tr>\n			<td>1</td>\n			<td>1</td>\n			<td>1</td>\n			<td>0</td>\n		</tr>\n	</tbody>\n</table>\n\n<p>将转换后数据代入上述Y，可以将原来的2n位二进制数转成n个正/负数相加，</p>\n\n<p>Y可以改写成</p>\n\n<p>$$Y=2^{2n-2}(Y_{outn})+2^{2n-4}(Y_{out(n-1)})+\\cdots+2^0(Y_{out1})$$</p>\n\n<p>这样让这个数再和另一个数相乘可以简化乘法</p>\n\n<p>&nbsp;</p>\n','2017-09-11 08:02:59.792182','','');
+/*!40000 ALTER TABLE `blog_article` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_attach`
+--
+
+DROP TABLE IF EXISTS `blog_attach`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `blog_attach` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `src` varchar(100) NOT NULL,
+  `file_name` varchar(80) NOT NULL,
+  `modifytime` datetime(6) NOT NULL,
+  `remark` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_attach`
+--
+
+LOCK TABLES `blog_attach` WRITE;
+/*!40000 ALTER TABLE `blog_attach` DISABLE KEYS */;
+INSERT INTO `blog_attach` VALUES (1,'./blog/static/common_upload/20170825065321_lalala.jpg','20170825065321_lalala.jpg','2017-08-25 06:53:21.810766',''),(2,'./blog/static/common_upload/20170825065533_lalala.jpg','20170825065533_lalala.jpg','2017-08-25 06:55:33.874751',''),(3,'./blog/static/common_upload/20170825065849_QQ截图20170808094635.jpg','20170825065849_QQ截图20170808094635.jpg','2017-08-25 06:58:49.211767',''),(4,'./blog/static/common_upload/20170825084618_QQ截图20170808094635.jpg','20170825084618_QQ截图20170808094635.jpg','2017-08-25 08:46:18.049273',''),(5,'./blog/static/common_upload/20170825084816_图片上传按钮具体内容.jpg','20170825084816_图片上传按钮具体内容.jpg','2017-08-25 08:48:16.800421',''),(6,'./blog/static/common_upload/20170825090323_QQ截图20170808094635.jpg','20170825090323_QQ截图20170808094635.jpg','2017-08-25 09:03:23.492869',''),(7,'./blog/static/common_upload/20170828132308_图片上传按钮具体内容.jpg','20170828132308_图片上传按钮具体内容.jpg','2017-08-28 13:23:08.649416',''),(8,'./blog/static/common_upload/20170828133214_数学公式.jpg','20170828133214_数学公式.jpg','2017-08-28 13:32:14.279184','');
+/*!40000 ALTER TABLE `blog_attach` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_block`
+--
+
+DROP TABLE IF EXISTS `blog_block`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `blog_block` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parentid` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `modifytime` datetime(6) NOT NULL,
+  `remark` varchar(50) NOT NULL,
+  `type` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_block`
+--
+
+LOCK TABLES `blog_block` WRITE;
+/*!40000 ALTER TABLE `blog_block` DISABLE KEYS */;
+INSERT INTO `blog_block` VALUES (1,0,'测试板块标题','我是描述','2017-08-13 07:08:27.921569','我是备注修改',0),(2,0,'python(django库)','django使用过程中遇到的问题以及原生python语法等','2017-08-20 16:43:49.202323','无',0),(3,0,'linux/nginx/shell/mysql','服务器搭建相关问题','2017-08-25 15:24:29.356511','',0),(4,0,'javascript(jquery)/html/css','前端知识','2017-08-25 09:02:55.583599','前端知识',0),(5,0,'verilog','硬件描述语言 verilog','2017-09-11 07:07:40.093198','硬件描述语言 verilog',0);
+/*!40000 ALTER TABLE `blog_block` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_blog`
+--
+
+DROP TABLE IF EXISTS `blog_blog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `blog_blog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL,
+  `content` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_blog`
+--
+
+LOCK TABLES `blog_blog` WRITE;
+/*!40000 ALTER TABLE `blog_blog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `blog_blog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_user`
+--
+
+DROP TABLE IF EXISTS `blog_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `blog_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(16) NOT NULL,
+  `password` varchar(16) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `registertime` datetime(6) NOT NULL,
+  `remark` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_user`
+--
+
+LOCK TABLES `blog_user` WRITE;
+/*!40000 ALTER TABLE `blog_user` DISABLE KEYS */;
+INSERT INTO `blog_user` VALUES (1,'blacksea3','19951020jxt','17865191779@163.com','2017-08-12 11:06:22.473982','superuser'),(2,'publicuser','xiaodoudou','17865191779@163.com','2017-08-12 11:07:01.857577','superuser');
+/*!40000 ALTER TABLE `blog_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+INSERT INTO `django_admin_log` VALUES (1,'2017-08-12 11:06:22.475624','1','blacksea3',1,'[{\"added\": {}}]',10,1),(2,'2017-08-12 11:07:01.858395','2','publicuser',1,'[{\"added\": {}}]',10,1);
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(4,'auth','group'),(2,'auth','permission'),(3,'auth','user'),(8,'blog','article'),(11,'blog','attach'),(9,'blog','block'),(7,'blog','blog'),(10,'blog','user'),(5,'contenttypes','contenttype'),(6,'sessions','session');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_migrations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2017-08-11 08:38:54.583773'),(2,'auth','0001_initial','2017-08-11 08:38:55.310789'),(3,'admin','0001_initial','2017-08-11 08:38:55.454007'),(4,'admin','0002_logentry_remove_auto_add','2017-08-11 08:38:55.473085'),(5,'contenttypes','0002_remove_content_type_name','2017-08-11 08:38:55.574978'),(6,'auth','0002_alter_permission_name_max_length','2017-08-11 08:38:55.597147'),(7,'auth','0003_alter_user_email_max_length','2017-08-11 08:38:55.616680'),(8,'auth','0004_alter_user_username_opts','2017-08-11 08:38:55.639844'),(9,'auth','0005_alter_user_last_login_null','2017-08-11 08:38:55.690624'),(10,'auth','0006_require_contenttypes_0002','2017-08-11 08:38:55.695654'),(11,'auth','0007_alter_validators_add_error_messages','2017-08-11 08:38:55.707239'),(12,'auth','0008_alter_user_username_max_length','2017-08-11 08:38:55.735161'),(13,'sessions','0001_initial','2017-08-11 08:38:55.773677'),(14,'blog','0001_initial','2017-08-11 09:30:24.091505'),(15,'blog','0002_article_block_user','2017-08-12 07:15:04.731174'),(16,'blog','0003_block_type','2017-08-13 06:37:51.046559'),(17,'blog','0004_auto_20170824_2308','2017-08-25 06:52:35.337290'),(18,'blog','0005_auto_20170825_1444','2017-08-25 06:52:35.344814');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('73w63efanrwhkpowkxwh0ter43b6t1vh','MjJmZTIwMDJkZjBlOTNhY2I3MzVjZGQ0MTlmOWFjYjcxOWVlODU0Nzp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwicGFzc3dvcmQiOiIxOTk1MTAyMGp4dCJ9','2017-08-27 07:06:56.942743'),('9o87p29s67u2an2lltah3aqdyoyb19iv','YjQwZTg1ODQ3ZmY3MzNjZjgyZWQ4ZDBmNTUzNjFjNDVmNjI4Y2EzYzp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwiX3Nlc3Npb25fZXhwaXJ5IjowLCJwYXNzd29yZCI6IjE5OTUxMDIwanh0In0=','2017-09-03 16:40:03.231188'),('gmyyyyjkukd7gefnnik7607jng2esuaj','YjIxNzA4OGUyMDVjNGQ2NmMyMjc0YjRkMmM4YjIzNTRkZjY4MjQ5NDp7InBhc3N3b3JkIjoiMTk5NTEwMjBqeHQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9zZXNzaW9uX2V4cGlyeSI6MCwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2hhc2giOiJmYjMyZjVjODNkOGVmZGFiM2RlNTRmNTNlY2QzMGQyYWI0YWQ3NDk4IiwidXNlcm5hbWUiOiJibGFja3NlYTMifQ==','2017-09-07 10:09:26.564513'),('hcuhcx25ehvksx2y9acblvl1mu5kwoc7','YjQwZTg1ODQ3ZmY3MzNjZjgyZWQ4ZDBmNTUzNjFjNDVmNjI4Y2EzYzp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwiX3Nlc3Npb25fZXhwaXJ5IjowLCJwYXNzd29yZCI6IjE5OTUxMDIwanh0In0=','2017-09-10 13:21:12.858956'),('mac2vtbkmd7nkykh40csmaq08xbpvex8','YjQwZTg1ODQ3ZmY3MzNjZjgyZWQ4ZDBmNTUzNjFjNDVmNjI4Y2EzYzp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwiX3Nlc3Npb25fZXhwaXJ5IjowLCJwYXNzd29yZCI6IjE5OTUxMDIwanh0In0=','2017-09-06 09:33:45.145309'),('nhatth4ztgttbnait9e6bksdnz5szsue','M2FhZGIxNTJiNjVjYzExZjNiNmZlYmQ4MTExNGY0MWJmYWM2MmFlNDp7InBhc3N3b3JkIjoiMTk5NTEwMjBqeHQiLCJfYXV0aF91c2VyX2hhc2giOiJmYjMyZjVjODNkOGVmZGFiM2RlNTRmNTNlY2QzMGQyYWI0YWQ3NDk4IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiMSIsInVzZXJuYW1lIjoiYmxhY2tzZWEzIn0=','2017-08-27 03:36:52.092025'),('nnitm3bhf82lho9owbnbwu1r7c5v6c0x','MzI0OTJjZmNiNjQzNDY5MjI5NzBmYmNiY2M5YTZmNDMwMzAxNjUzMjp7InBhc3N3b3JkIjoiMTk5NTEwMjBqeHQiLCJ1c2VybmFtZSI6ImJsYWNrc2VhMyIsIl9zZXNzaW9uX2V4cGlyeSI6MH0=','2017-09-25 07:05:43.999574'),('prltf0l0voyxnjex3znro9iil0aonaor','MzI0OTJjZmNiNjQzNDY5MjI5NzBmYmNiY2M5YTZmNDMwMzAxNjUzMjp7InBhc3N3b3JkIjoiMTk5NTEwMjBqeHQiLCJ1c2VybmFtZSI6ImJsYWNrc2VhMyIsIl9zZXNzaW9uX2V4cGlyeSI6MH0=','2017-09-04 16:24:28.763640'),('q4spy1xxhdo6p6zqqngkiyra2x6n1lzq','MzA2ZjM5NWNjM2U4ODgwYjQxYWYyNWY4MjRmMGRiZDg5ZmEyZjU5MDp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwicGFzc3dvcmQiOiIxOTk1MTAyMGp4dCIsIl9zZXNzaW9uX2V4cGlyeSI6MH0=','2017-09-05 09:46:39.445320'),('r723m9t9xbvfllap6n2flp1e6hcdiiep','ODliOWNmMGI5NDUxNDY1MjNhYTJjMTBiNjcwNjk3YjhhZTZhMzRlYTp7Il9zZXNzaW9uX2V4cGlyeSI6MCwicGFzc3dvcmQiOiIxOTk1MTAyMGp4dCIsInVzZXJuYW1lIjoiYmxhY2tzZWEzIn0=','2017-08-29 16:01:02.055797'),('rv2043ealomsqkynsgvyojl5yhm9g904','MzA2ZjM5NWNjM2U4ODgwYjQxYWYyNWY4MjRmMGRiZDg5ZmEyZjU5MDp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwicGFzc3dvcmQiOiIxOTk1MTAyMGp4dCIsIl9zZXNzaW9uX2V4cGlyeSI6MH0=','2017-09-28 07:31:27.313384'),('t7iq3w9oxjtexc1xnx9pic48eud5b7hj','MzA2ZjM5NWNjM2U4ODgwYjQxYWYyNWY4MjRmMGRiZDg5ZmEyZjU5MDp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwicGFzc3dvcmQiOiIxOTk1MTAyMGp4dCIsIl9zZXNzaW9uX2V4cGlyeSI6MH0=','2017-10-24 02:01:20.885175'),('uevhx6jjvddykzeuel1k9szcahepq493','YjQwZTg1ODQ3ZmY3MzNjZjgyZWQ4ZDBmNTUzNjFjNDVmNjI4Y2EzYzp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwiX3Nlc3Npb25fZXhwaXJ5IjowLCJwYXNzd29yZCI6IjE5OTUxMDIwanh0In0=','2017-09-08 06:52:52.373880'),('vflap9tldmikcydbposuewlr8dqwmus0','YjQwZTg1ODQ3ZmY3MzNjZjgyZWQ4ZDBmNTUzNjFjNDVmNjI4Y2EzYzp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwiX3Nlc3Npb25fZXhwaXJ5IjowLCJwYXNzd29yZCI6IjE5OTUxMDIwanh0In0=','2017-08-27 06:38:45.574475'),('wa7kzahlbcc5dksk2w8lsutxobqxkskr','YjQwZTg1ODQ3ZmY3MzNjZjgyZWQ4ZDBmNTUzNjFjNDVmNjI4Y2EzYzp7InVzZXJuYW1lIjoiYmxhY2tzZWEzIiwiX3Nlc3Npb25fZXhwaXJ5IjowLCJwYXNzd29yZCI6IjE5OTUxMDIwanh0In0=','2017-09-11 13:20:14.056837'),('yxj4pd270z9al9nnzk0q9rqk07y52ye0','ZWE3YWVkNjNiMzM1OTFiZTdkYTU3Yzc5NjMyZjM5ZTFjM2NhMTY3Yjp7Il9zZXNzaW9uX2V4cGlyeSI6MCwidXNlcm5hbWUiOiJibGFja3NlYTMiLCJwYXNzd29yZCI6IjE5OTUxMDIwanh0In0=','2017-08-29 05:18:52.994813');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-10-10 10:41:00
